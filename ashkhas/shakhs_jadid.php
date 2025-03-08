@@ -10,7 +10,95 @@
         body {
             font-family: 'IranSans', sans-serif;
         }
+        .tab-content {
+            display: none;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        .image-upload {
+            position: relative;
+            max-width: 200px;
+            margin: auto;
+        }
+
+        .image-upload .image-edit {
+            position: absolute;
+            right: 12px;
+            top: 10px;
+            z-index: 1;
+        }
+
+        .image-upload .image-edit input {
+            display: none;
+        }
+
+        .image-upload .image-edit label {
+            display: inline-block;
+            width: 34px;
+            height: 34px;
+            margin-bottom: 0;
+            border-radius: 100%;
+            background: #FFFFFF;
+            border: 1px solid transparent;
+            box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.12);
+            cursor: pointer;
+            font-weight: normal;
+            transition: all 0.3s ease-in-out;
+        }
+
+        .image-upload .image-edit label:hover {
+            background: #f1f1f1;
+            border-color: #d2d2d2;
+        }
+
+        .image-upload .image-preview {
+            width: 192px;
+            height: 192px;
+            position: relative;
+            border-radius: 100%;
+            border: 6px solid #F8F8F8;
+            box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.1);
+        }
+
+        .image-upload .image-preview img {
+            width: 100%;
+            height: 100%;
+            border-radius: 100%;
+            background-color: #F8F8F8;
+            object-fit: cover;
+        }
     </style>
+    <script>
+        function generateCode() {
+            //در اینجا باید کد تولید شود و در input قرار بگیرد
+            document.getElementById("code_hesabdari").value = Math.floor(Math.random() * 900000) + 100000;
+        }
+
+         function openCategoryPopup() {
+            window.open("categories.php", "Category Manager", "width=800,height=600");
+        }
+
+        function openTab(evt, tabName) {
+            var i, tabcontent, tablinks;
+            tabcontent = document.getElementsByClassName("tab-content");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].classList.remove("active");
+            }
+            tablinks = document.getElementsByClassName("tablinks");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].classList.remove("active");
+            }
+            document.getElementById(tabName).classList.add("active");
+            evt.currentTarget.classList.add("active");
+        }
+
+        // نمایش تب عمومی به صورت پیش فرض
+        document.addEventListener("DOMContentLoaded", function() {
+            document.getElementById("defaultOpen").click();
+        });
+
+    </script>
 </head>
 <body class="bg-gray-100">
 
@@ -29,7 +117,10 @@
                                 <label class="block text-gray-700 text-sm font-bold mb-2" for="code_hesabdari">
                                     کد حسابداری:
                                 </label>
-                                <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="code_hesabdari" name="code_hesabdari" type="text" placeholder="کد حسابداری">
+                                <div class="flex">
+                                    <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="code_hesabdari" name="code_hesabdari" type="text" placeholder="کد حسابداری">
+                                    <button type="button" onclick="generateCode()" class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"><i class="fas fa-magic"></i></button>
+                                </div>
                             </div>
                             <div class="mb-4">
                                 <label class="block text-gray-700 text-sm font-bold mb-2" for="company">
@@ -65,7 +156,10 @@
                                 <label class="block text-gray-700 text-sm font-bold mb-2" for="category">
                                     دسته‌بندی:
                                 </label>
-                                <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="category" name="category" type="text" placeholder="دسته‌بندی">
+                                <div class="flex">
+                                    <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="category" name="category" type="text" placeholder="دسته‌بندی">
+                                    <button type="button" onclick="openCategoryPopup()" class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"><i class="fas fa-plus"></i></button>
+                                </div>
                             </div>
                              <div class="mb-4">
                                 <label class="block text-gray-700 text-sm font-bold mb-2">
@@ -92,12 +186,16 @@
                     </div>
                     <div class="w-1/4">
                         <!-- تصویر شخص -->
-                        <div class="mb-4">
-                            <label class="block text-gray-700 text-sm font-bold mb-2" for="person_image">
-                                تصویر شخص:
+                        <div class="image-upload">
+                            <label for="file-input">
+                                <div class="image-preview">
+                                    <img id="imagePreview" src="default_person.png" alt="تصویر شخص"/>
+                                </div>
                             </label>
-                            <img src="https://via.placeholder.com/150" alt="تصویر شخص" class="rounded-full w-32 h-32 mx-auto">
-                            <input type="file" class="form-input mt-2" id="person_image" name="person_image">
+                            <div class="image-edit">
+                                <input type='file' id="file-input" name="person_image" accept=".png, .jpg, .jpeg" />
+                                <label for="file-input"></label>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -107,36 +205,217 @@
                     <div class="border-b border-gray-200">
                         <ul class="flex flex-wrap -mb-px text-sm font-medium text-center">
                             <li class="mr-2">
-                                <a href="#" class="inline-flex p-4 rounded-t-lg border-b-2 border-transparent hover:text-gray-600 hover:border-gray-300 group">
+                                <button type="button" class="tablinks inline-flex p-4 rounded-t-lg border-b-2 border-transparent hover:text-gray-600 hover:border-gray-300 group" onclick="openTab(event, 'general')" id="defaultOpen">
                                     <i class="fas fa-info-circle ml-2"></i>
                                     عمومی
-                                </a>
+                                </button>
                             </li>
                             <li class="mr-2">
-                                <a href="#" class="inline-flex p-4 rounded-t-lg border-b-2 border-transparent hover:text-gray-600 hover:border-gray-300 group">
+                                <button type="button"  class="tablinks inline-flex p-4 rounded-t-lg border-b-2 border-transparent hover:text-gray-600 hover:border-gray-300 group" onclick="openTab(event, 'address')">
                                     <i class="fas fa-map-marker-alt ml-2"></i>
                                     اطلاعات آدرس
-                                </a>
+                                </button>
                             </li>
                              <li class="mr-2">
-                                <a href="#" class="inline-flex p-4 rounded-t-lg border-b-2 border-transparent hover:text-gray-600 hover:border-gray-300 group">
+                                  <button type="button"   class="tablinks inline-flex p-4 rounded-t-lg border-b-2 border-transparent hover:text-gray-600 hover:border-gray-300 group" onclick="openTab(event, 'contact')">
                                     <i class="fas fa-phone ml-2"></i>
                                     اطلاعات تماس
-                                </a>
+                                </button>
                             </li>
                              <li class="mr-2">
-                                <a href="#" class="inline-flex p-4 rounded-t-lg border-b-2 border-transparent hover:text-gray-600 hover:border-gray-300 group">
+                                  <button type="button"  class="tablinks inline-flex p-4 rounded-t-lg border-b-2 border-transparent hover:text-gray-600 hover:border-gray-300 group" onclick="openTab(event, 'bank')">
                                     <i class="fas fa-university ml-2"></i>
                                     حساب بانکی
-                                </a>
+                                </button>
                             </li>
                             <li class="mr-2">
-                                <a href="#" class="inline-flex p-4 rounded-t-lg border-b-2 border-transparent hover:text-gray-600 hover:border-gray-300 group">
+                                  <button type="button"   class="tablinks inline-flex p-4 rounded-t-lg border-b-2 border-transparent hover:text-gray-600 hover:border-gray-300 group" onclick="openTab(event, 'other')">
                                     <i class="fas fa-ellipsis-h ml-2"></i>
                                     سایر
-                                </a>
+                                </button>
                             </li>
                         </ul>
+                    </div>
+
+                     <!-- محتوای تب ها -->
+                    <div id="general" class="tab-content p-4">
+                        <div class="grid grid-cols-2 gap-4">
+                            <div class="mb-4">
+                                <label class="block text-gray-700 text-sm font-bold mb-2" for="credit">
+                                    اعتبار مالی:
+                                </label>
+                                <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="credit" name="credit" type="text" placeholder="اعتبار مالی">
+                                <span>ریال</span>
+                            </div>
+                            <div class="mb-4">
+                                <label class="block text-gray-700 text-sm font-bold mb-2" for="price_list">
+                                    لیست قیمت:
+                                </label>
+                                <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="price_list" name="price_list" type="text" placeholder="لیست قیمت">
+                            </div>
+                            <div class="mb-4">
+                                <label class="block text-gray-700 text-sm font-bold mb-2" for="tax_type">
+                                    نوع مالیات:
+                                </label>
+                                <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="tax_type" name="tax_type" type="text" placeholder="نوع مالیات">
+                            </div>
+                             <div class="mb-4">
+                                <label class="block text-gray-700 text-sm font-bold mb-2" for="tax_registration">
+                                    مودی مشمول ثبت نام در نظام مالیاتی:
+                                </label>
+                                <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="tax_registration" name="tax_registration" type="text" placeholder="مودی مشمول ثبت نام در نظام مالیاتی">
+                            </div>
+                             <div class="mb-4">
+                                <label class="block text-gray-700 text-sm font-bold mb-2" for="shenase_meli">
+                                    شناسه ملی:
+                                </label>
+                                <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="shenase_meli" name="shenase_meli" type="text" placeholder="شناسه ملی">
+                            </div>
+                             <div class="mb-4">
+                                <label class="block text-gray-700 text-sm font-bold mb-2" for="code_eghtesadi">
+                                    کد اقتصادی:
+                                </label>
+                                <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="code_eghtesadi" name="code_eghtesadi" type="text" placeholder="کد اقتصادی">
+                            </div>
+                             <div class="mb-4">
+                                <label class="block text-gray-700 text-sm font-bold mb-2" for="shomare_sabt">
+                                    شماره ثبت:
+                                </label>
+                                <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="shomare_sabt" name="shomare_sabt" type="text" placeholder="شماره ثبت">
+                            </div>
+                             <div class="mb-4">
+                                <label class="block text-gray-700 text-sm font-bold mb-2" for="code_shobe">
+                                    کد شعبه:
+                                </label>
+                                <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="code_shobe" name="code_shobe" type="text" placeholder="کد شعبه">
+                            </div>
+                             <div class="mb-4">
+                                <label class="block text-gray-700 text-sm font-bold mb-2" for="tozihat">
+                                    توضیحات:
+                                </label>
+                                 <textarea class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="tozihat" name="tozihat" placeholder="توضیحات"></textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                      <!-- محتوای تب اطلاعات آدرس -->
+                    <div id="address" class="tab-content p-4">
+                         <div class="grid grid-cols-1 gap-4">
+                            <div class="mb-4">
+                                <label class="block text-gray-700 text-sm font-bold mb-2" for="address_text">
+                                    آدرس:
+                                </label>
+                                 <textarea class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="address_text" name="address_text" placeholder="آدرس"></textarea>
+                            </div>
+                             <div class="mb-4">
+                                <label class="block text-gray-700 text-sm font-bold mb-2" for="country">
+                                    کشور:
+                                </label>
+                                <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="country" name="country" type="text" placeholder="کشور">
+                            </div>
+                             <div class="mb-4">
+                                <label class="block text-gray-700 text-sm font-bold mb-2" for="ostan">
+                                    استان:
+                                </label>
+                                <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="ostan" name="ostan" type="text" placeholder="استان">
+                            </div>
+                             <div class="mb-4">
+                                <label class="block text-gray-700 text-sm font-bold mb-2" for="shahr">
+                                    شهر:
+                                </label>
+                                <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="shahr" name="shahr" type="text" placeholder="شهر">
+                            </div>
+                             <div class="mb-4">
+                                <label class="block text-gray-700 text-sm font-bold mb-2" for="codeposti">
+                                    کدپستی:
+                                </label>
+                                <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="codeposti" name="codeposti" type="text" placeholder="کدپستی">
+                            </div>
+                         </div>
+                    </div>
+
+                      <!-- محتوای تب اطلاعات تماس -->
+                    <div id="contact" class="tab-content p-4">
+                         <div class="grid grid-cols-1 gap-4">
+                            <div class="mb-4">
+                                <label class="block text-gray-700 text-sm font-bold mb-2" for="telephone">
+                                    تلفن:
+                                </label>
+                                <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="telephone" name="telephone" type="text" placeholder="تلفن">
+                            </div>
+                             <div class="mb-4">
+                                <label class="block text-gray-700 text-sm font-bold mb-2" for="mobile">
+                                    موبایل:
+                                </label>
+                                <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="mobile" name="mobile" type="text" placeholder="موبایل">
+                            </div>
+                             <div class="mb-4">
+                                <label class="block text-gray-700 text-sm font-bold mb-2" for="fax">
+                                    فکس:
+                                </label>
+                                <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="fax" name="fax" type="text" placeholder="فکس">
+                            </div>
+                             <div class="mb-4">
+                                <label class="block text-gray-700 text-sm font-bold mb-2" for="telephone1">
+                                    تلفن 1:
+                                </label>
+                                <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="telephone1" name="telephone1" type="text" placeholder="تلفن 1">
+                            </div>
+                               <div class="mb-4">
+                                <label class="block text-gray-700 text-sm font-bold mb-2" for="telephone2">
+                                    تلفن 2:
+                                </label>
+                                <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="telephone2" name="telephone2" type="text" placeholder="تلفن 2">
+                            </div>
+                               <div class="mb-4">
+                                <label class="block text-gray-700 text-sm font-bold mb-2" for="telephone3">
+                                    تلفن 3:
+                                </label>
+                                <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="telephone3" name="telephone3" type="text" placeholder="تلفن 3">
+                            </div>
+                             <div class="mb-4">
+                                <label class="block text-gray-700 text-sm font-bold mb-2" for="email">
+                                    ایمیل:
+                                </label>
+                                <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="email" name="email" type="email" placeholder="ایمیل">
+                            </div>
+                             <div class="mb-4">
+                                <label class="block text-gray-700 text-sm font-bold mb-2" for="website">
+                                    وب سایت:
+                                </label>
+                                <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="website" name="website" type="text" placeholder="وب سایت">
+                            </div>
+                         </div>
+                    </div>
+
+                     <!-- محتوای تب حساب بانکی -->
+                    <div id="bank" class="tab-content p-4">
+                        <button type="button" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mb-4"><i class="fas fa-plus"></i> افزودن حساب بانکی</button>
+                         <!-- در اینجا باید اطلاعات حساب بانکی به صورت داینامیک اضافه شود -->
+                    </div>
+
+                     <!-- محتوای تب سایر -->
+                    <div id="other" class="tab-content p-4">
+                         <div class="grid grid-cols-1 gap-4">
+                            <div class="mb-4">
+                                <label class="block text-gray-700 text-sm font-bold mb-2" for="birth_date">
+                                    تاریخ تولد:
+                                </label>
+                                <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="birth_date" name="birth_date" type="text" placeholder="تاریخ تولد">
+                            </div>
+                             <div class="mb-4">
+                                <label class="block text-gray-700 text-sm font-bold mb-2" for="marriage_date">
+                                    تاریخ ازدواج:
+                                </label>
+                                <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="marriage_date" name="marriage_date" type="text" placeholder="تاریخ ازدواج">
+                            </div>
+                             <div class="mb-4">
+                                <label class="block text-gray-700 text-sm font-bold mb-2" for="membership_date">
+                                    تاریخ عضویت:
+                                </label>
+                                <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="membership_date" name="membership_date" type="text" placeholder="تاریخ عضویت" value="<?php echo date("Y/m/d"); ?>" readonly>
+                            </div>
+                         </div>
                     </div>
                 </div>
 
@@ -149,6 +428,15 @@
         </div>
 
     </div>
+     <script>
+        // تغییر تصویر پیش نمایش
+        fileInput.onchange = evt => {
+            const [file] = fileInput.files
+            if (file) {
+                imagePreview.src = URL.createObjectURL(file)
+            }
+        }
+    </script>
 
 </body>
 </html>
