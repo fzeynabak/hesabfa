@@ -13,20 +13,20 @@
         /* استایل های منوی کشویی */
         .dropdown {
             position: relative;
-            display: block; /* تغییر به block */
+            display: block;
         }
 
         .dropdown-content {
             display: none;
-            position: relative; /* تغییر به relative */
+            position: relative;
             background-color: #f9f9f9;
             min-width: 160px;
             box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-            padding: 0; /* حذف padding */
+            padding: 0;
             z-index: 1;
             right: 0;
-            list-style: none; /* حذف استایل لیست */
-            margin: 0; /* حذف margin */
+            list-style: none;
+            margin: 0;
         }
 
         .dropdown-content a {
@@ -64,7 +64,7 @@
 
          // کد JavaScript برای اعمال استایل active به منوی فعال
         document.addEventListener("DOMContentLoaded", function() {
-            var currentPage = window.location.pathname.split('/').pop(); // دریافت نام فایل صفحه فعلی
+            var currentPage = window.location.pathname; // دریافت نام فایل صفحه فعلی
             var menuLinks = document.querySelectorAll("#sidebar a"); // انتخاب تمام لینک های منو
 
             for (var i = 0; i < menuLinks.length; i++) {
@@ -91,7 +91,7 @@
                 <ul class="p-4">
                     <li class="mb-2"><a href="dashboard/index.php" class="block hover:bg-gray-700 p-2 rounded"><i class="fas fa-tachometer-alt ml-2"></i> داشبورد</a></li>
                     <li class="mb-2 dropdown">
-                        <a href="#" class="block hover:bg-gray-700 p-2 rounded" onclick="toggleDropdown(this)"><i class="fas fa-users ml-2"></i> اشخاص</a>
+                        <a href="#" class="block hover:bg-gray-700 p-2 rounded" onclick="toggleDropdown(this); return false;"><i class="fas fa-users ml-2"></i> اشخاص</a>
                         <ul class="dropdown-content">
                             <li><a href="ashkhas/shakhs_jadid.php" class="block hover:bg-gray-700 p-2 rounded pr-4"><i class="fas fa-plus ml-2"></i> شخص جدید</a></li>
                             <li><a href="ashkhas/ashkhas.php" class="block hover:bg-gray-700 p-2 rounded pr-4"><i class="fas fa-list ml-2"></i> اشخاص</a></li>
@@ -99,7 +99,7 @@
                         </ul>
                     </li>
                     <li class="mb-2 dropdown">
-                        <a href="#" class="block hover:bg-gray-700 p-2 rounded" onclick="toggleDropdown(this)"><i class="fas fa-box-open ml-2"></i> کالاها و خدمات</a>
+                        <a href="#" class="block hover:bg-gray-700 p-2 rounded" onclick="toggleDropdown(this); return false;"><i class="fas fa-box-open ml-2"></i> کالاها و خدمات</a>
                         <ul class="dropdown-content">
                             <li><a href="kala_khadamat/mahsul_jadid.php" class="block hover:bg-gray-700 p-2 rounded pr-4"><i class="fas fa-plus ml-2"></i> محصول جدید</a></li>
                             <li><a href="kala_khadamat/fehrest_mahsolat.php" class="block hover:bg-gray-700 p-2 rounded pr-4"><i class="fas fa-list ml-2"></i> فهرست محصولات</a></li>
@@ -111,7 +111,7 @@
                         </ul>
                     </li>
                     <li class="mb-2 dropdown">
-                        <a href="#" class="block hover:bg-gray-700 p-2 rounded" onclick="toggleDropdown(this)"><i class="fas fa-money-bill ml-2"></i> فروش و درآمد</a>
+                        <a href="#" class="block hover:bg-gray-700 p-2 rounded" onclick="toggleDropdown(this); return false;"><i class="fas fa-money-bill ml-2"></i> فروش و درآمد</a>
                         <ul class="dropdown-content">
                             <li><a href="forosh_daramad/forosh_jadid.php" class="block hover:bg-gray-700 p-2 rounded pr-4"><i class="fas fa-plus ml-2"></i> فروش جدید</a></li>
                             <li><a href="forosh_daramad/factore_sريع.php" class="block hover:bg-gray-700 p-2 rounded pr-4"><i class="fas fa-bolt ml-2"></i> فاکتور سریع</a></li>
@@ -126,7 +126,7 @@
                         </ul>
                     </li>
                       <li class="mb-2 dropdown">
-                        <a href="#" class="block hover:bg-gray-700 p-2 rounded" onclick="toggleDropdown(this)"><i class="fas fa-shopping-cart ml-2"></i> خرید و هزینه</a>
+                        <a href="#" class="block hover:bg-gray-700 p-2 rounded" onclick="toggleDropdown(this); return false;"><i class="fas fa-shopping-cart ml-2"></i> خرید و هزینه</a>
                         <ul class="dropdown-content">
                             <li><a href="kharid_hazine/kharid_jadid.php" class="block hover:bg-gray-700 p-2 rounded pr-4"><i class="fas fa-plus ml-2"></i> خرید جدید</a></li>
                             <li><a href="kharid_hazine/bargasht_az_kharid.php" class="block hover:bg-gray-700 p-2 rounded pr-4"><i class="fas fa-undo ml-2"></i> برگشت از خرید</a></li>
@@ -139,7 +139,7 @@
                         </ul>
                     </li>
                      <li class="mb-2 dropdown">
-                        <a href="#" class="block hover:bg-gray-700 p-2 rounded" onclick="toggleDropdown(this)"><i class="fas fa-warehouse ml-2"></i> انبارداری</a>
+                        <a href="#" class="block hover:bg-gray-700 p-2 rounded" onclick="toggleDropdown(this); return false;"><i class="fas fa-warehouse ml-2"></i> انبارداری</a>
                         <ul class="dropdown-content">
                             <li><a href="anbardari/anbarha.php" class="block hover:bg-gray-700 p-2 rounded pr-4"><i class="fas fa-boxes ml-2"></i> انبارها</a></li>
                             <li><a href="anbardari/havale_jadid.php" class="block hover:bg-gray-700 p-2 rounded pr-4"><i class="fas fa-truck-loading ml-2"></i> حواله جدید</a></li>

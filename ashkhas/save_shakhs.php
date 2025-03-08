@@ -39,7 +39,7 @@ $codeposti = $_POST['codeposti'];
 //اعتبارسنجی اطلاعات (حداقل نام و نام خانوادگی)
 if (empty($name) || empty($family)) {
     $message = "نام و نام خانوادگی الزامی است.";
-    header("Location: ../index.php?message=" . urlencode($message));
+    header("Location: ../ashkhas/shakhs_jadid.php?message=" . urlencode($message));
     exit;
 }
 
@@ -72,7 +72,7 @@ $codeposti = htmlspecialchars(escapeString($codeposti));
 
 //Query برای درج اطلاعات در جدول
 $sql = "INSERT INTO ashkhas (code_hesabdari, company, title, name, family, nickname, category, type_customer, type_supplier, type_shareholder, type_employee, credit, price_list, tax_type, tax_registration, shenase_meli, code_eghtesadi, shomare_sabt, code_shobe, tozihat, address_text, country, ostan, shahr, codeposti) 
-VALUES ('$code_hesabdari', '$company', '$title', '$name', '$family', '$nickname', '$category', '$type_customer', '$type_supplier', '$type_shareholder', '$type_employee', '$credit', '$price_list', '$tax_type', '$tax_registration', '$shenase_meli', '$code_eghtesadi', '$shomare_sabt', '$code_shobe', '$tozihat, '$address_text', '$country', '$ostan', '$shahr', '$codeposti')";
+VALUES ('$code_hesabdari', '$company', '$title', '$name', '$family', '$nickname', '$category', '$type_customer', '$type_supplier', '$type_shareholder', '$type_employee', '$credit', '$price_list', '$tax_type', '$tax_registration', '$shenase_meli', '$code_eghtesadi', '$shomare_sabt', '$code_shobe', '$tozihat', '$address_text', '$country', '$ostan', '$shahr', '$codeposti')";
 
 // اجرای Query
 if (executeQuery($sql)) {
@@ -85,7 +85,7 @@ if (executeQuery($sql)) {
 closeConnection();
 
 // انتقال به صفحه اصلی با پیام
-header("Location: ../index.php?message=" . urlencode($message));
+header("Location: ../ashkhas/ashkhas.php?message=" . urlencode($message));
 exit;
 
 ?>

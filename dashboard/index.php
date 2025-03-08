@@ -1,6 +1,5 @@
-<?php $page = 'dashboard/index.php'; include '../index.php'; ?>
 <?php
-$page = 'dashboard/index.php'; // تعیین صفحه فعال
+$page = '/hesabfa/dashboard/index.php'; // تعیین صفحه فعال
 include '../index.php';
 ?>
         <!-- محتوای اصلی -->

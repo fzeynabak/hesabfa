@@ -1,4 +1,3 @@
-<?php $page = 'ashkhas/ashkhas.php'; include '../index.php'; ?>
 <?php
 $page = 'ashkhas/ashkhas.php'; // تعیین صفحه فعال
 include '../index.php';
