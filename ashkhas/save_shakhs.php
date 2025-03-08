@@ -3,25 +3,20 @@
 // اتصال به پایگاه داده
 include '../database.php';
 
-// دریافت اطلاعات از فرم
-$code = $_POST['code'];
-$company_name = $_POST['company_name'];
+// دریافت اطلاعات از فرم (قسمت بالای صفحه)
+$code_hesabdari = $_POST['code_hesabdari'];
+$company = $_POST['company'];
+$title = $_POST['title'];
 $name = $_POST['name'];
 $family = $_POST['family'];
-$father_name = $_POST['father_name'];
-$shenasname = $_POST['shenasname'];
-$eghtesadi = $_POST['eghtesadi'];
-$shomare_sabt = $_POST['shomare_sabt'];
-$phone = $_POST['phone'];
-$mobile = $_POST['mobile'];
-$fax = $_POST['fax'];
-$email = $_POST['email'];
-$website = $_POST['website'];
-$country = $_POST['country'];
-$ostan = $_POST['ostan'];
-$shahr = $_POST['shahr'];
-$codeposti = $_POST['codeposti'];
-$address = $_POST['address'];
+$nickname = $_POST['nickname'];
+$category = $_POST['category'];
+
+//دریافت اطلاعات مربوط به نوع شخص
+$type_customer = isset($_POST['type_customer']) ? 1 : 0;
+$type_supplier = isset($_POST['type_supplier']) ? 1 : 0;
+$type_shareholder = isset($_POST['type_shareholder']) ? 1 : 0;
+$type_employee = isset($_POST['type_employee']) ? 1 : 0;
 
 // اعتبارسنجی اطلاعات (حداقل نام و نام خانوادگی)
 if (empty($name) || empty($family)) {
@@ -31,28 +26,17 @@ if (empty($name) || empty($family)) {
 }
 
 // جلوگیری از XSS و SQL Injection
-$code = htmlspecialchars(escapeString($code));
-$company_name = htmlspecialchars(escapeString($company_name));
+$code_hesabdari = htmlspecialchars(escapeString($code_hesabdari));
+$company = htmlspecialchars(escapeString($company));
+$title = htmlspecialchars(escapeString($title));
 $name = htmlspecialchars(escapeString($name));
 $family = htmlspecialchars(escapeString($family));
-$father_name = htmlspecialchars(escapeString($father_name));
-$shenasname = htmlspecialchars(escapeString($shenasname));
-$eghtesadi = htmlspecialchars(escapeString($eghtesadi));
-$shomare_sabt = htmlspecialchars(escapeString($shomare_sabt));
-$phone = htmlspecialchars(escapeString($phone));
-$mobile = htmlspecialchars(escapeString($mobile));
-$fax = htmlspecialchars(escapeString($fax));
-$email = htmlspecialchars(escapeString($email));
-$website = htmlspecialchars(escapeString($website));
-$country = htmlspecialchars(escapeString($country));
-$ostan = htmlspecialchars(escapeString($ostan));
-$shahr = htmlspecialchars(escapeString($shahr));
-$codeposti = htmlspecialchars(escapeString($codeposti));
-$address = htmlspecialchars(escapeString($address));
+$nickname = htmlspecialchars(escapeString($nickname));
+$category = htmlspecialchars(escapeString($category));
 
 // Query برای درج اطلاعات در جدول
-$sql = "INSERT INTO ashkhas (code, company_name, name, family, father_name, shenasname, eghtesadi, shomare_sabt, phone, mobile, fax, email, website, country, ostan, shahr, codeposti, address) 
-VALUES ('$code', '$company_name', '$name', '$family', '$father_name', '$shenasname', '$eghtesadi', '$shomare_sabt', '$phone', '$mobile', '$fax', '$email', '$website', '$country', '$ostan', '$shahr', '$codeposti', '$address')";
+$sql = "INSERT INTO ashkhas (code_hesabdari, company, title, name, family, nickname, category, type_customer, type_supplier, type_shareholder, type_employee) 
+VALUES ('$code_hesabdari', '$company', '$title', '$name', '$family', '$nickname', '$category', '$type_customer', '$type_supplier', '$type_shareholder', '$type_employee')";
 
 // اجرای Query
 if (executeQuery($sql)) {
