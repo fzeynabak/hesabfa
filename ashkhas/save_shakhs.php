@@ -36,6 +36,16 @@ $ostan = $_POST['ostan'];
 $shahr = $_POST['shahr'];
 $codeposti = $_POST['codeposti'];
 
+//دریافت اطلاعات تب تماس
+$telephone = $_POST['telephone'];
+$mobile = $_POST['mobile'];
+$fax = $_POST['fax'];
+$telephone1 = $_POST['telephone1'];
+$telephone2 = $_POST['telephone2'];
+$telephone3 = $_POST['telephone3'];
+$email = $_POST['email'];
+$website = $_POST['website'];
+
 //اعتبارسنجی اطلاعات (حداقل نام و نام خانوادگی)
 if (empty($name) || empty($family)) {
     $message = "نام و نام خانوادگی الزامی است.";
@@ -70,9 +80,19 @@ $ostan = htmlspecialchars(escapeString($ostan));
 $shahr = htmlspecialchars(escapeString($shahr));
 $codeposti = htmlspecialchars(escapeString($codeposti));
 
+//جلوگیری از XSS و SQL Injection (تب تماس)
+$telephone = htmlspecialchars(escapeString($telephone));
+$mobile = htmlspecialchars(escapeString($mobile));
+$fax = htmlspecialchars(escapeString($fax));
+$telephone1 = htmlspecialchars(escapeString($telephone1));
+$telephone2 = htmlspecialchars(escapeString($telephone2));
+$telephone3 = htmlspecialchars(escapeString($telephone3));
+$email = htmlspecialchars(escapeString($email));
+$website = htmlspecialchars(escapeString($website));
+
 //Query برای درج اطلاعات در جدول
-$sql = "INSERT INTO ashkhas (code_hesabdari, company, title, name, family, nickname, category, type_customer, type_supplier, type_shareholder, type_employee, credit, price_list, tax_type, tax_registration, shenase_meli, code_eghtesadi, shomare_sabt, code_shobe, tozihat, address_text, country, ostan, shahr, codeposti) 
-VALUES ('$code_hesabdari', '$company', '$title', '$name', '$family', '$nickname', '$category', '$type_customer', '$type_supplier', '$type_shareholder', '$type_employee', '$credit', '$price_list', '$tax_type', '$tax_registration', '$shenase_meli', '$code_eghtesadi', '$shomare_sabt', '$code_shobe', '$tozihat', '$address_text', '$country', '$ostan', '$shahr', '$codeposti')";
+$sql = "INSERT INTO ashkhas (code_hesabdari, company, title, name, family, nickname, category, type_customer, type_supplier, type_shareholder, type_employee, credit, price_list, tax_type, tax_registration, shenase_meli, code_eghtesadi, shomare_sabt, code_shobe, tozihat, address_text, country, ostan, shahr, codeposti, telephone, mobile, fax, telephone1, telephone2, telephone3, email, website) 
+VALUES ('$code_hesabdari', '$company', '$title', '$name', '$family', '$nickname', '$category', '$type_customer', '$type_supplier', '$type_shareholder', '$type_employee', '$credit', '$price_list', '$tax_type', '$tax_registration', '$shenase_meli', '$code_eghtesadi', '$shomare_sabt', '$code_shobe', '$tozihat', '$address_text', '$country', '$ostan', '$shahr', '$codeposti', '$telephone', '$mobile', '$fax', '$telephone1', '$telephone2', '$telephone3', '$email', '$website')";
 
 // اجرای Query
 if (executeQuery($sql)) {
@@ -87,5 +107,4 @@ closeConnection();
 // انتقال به صفحه اصلی با پیام
 header("Location: ../ashkhas/ashkhas.php?message=" . urlencode($message));
 exit;
-
 ?>

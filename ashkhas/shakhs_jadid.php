@@ -1,7 +1,10 @@
 <?php
-$page = 'ashkhas/shakhs_jadid.php'; // تعیین صفحه فعال
+$page = '/hesabfa/ashkhas/shakhs_jadid.php'; // تعیین صفحه فعال
 include '../index.php';
 ?>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" integrity="sha512-wnea99uKIC3OJeOA1UDjUxWxYEjbz5Bi6qidw9/tKtCuj/j7W3tGYWVMvPQRwUjvL5j6ykjFLEGwdBSXVcKGiw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <style>
         body {
@@ -66,6 +69,7 @@ include '../index.php';
             object-fit: cover;
         }
     </style>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         function generateCode() {
             //در اینجا باید کد تولید شود و در input قرار بگیرد
@@ -93,6 +97,23 @@ include '../index.php';
         // نمایش تب عمومی به صورت پیش فرض
         document.addEventListener("DOMContentLoaded", function() {
             document.getElementById("defaultOpen").click();
+        });
+
+         // تغییر تصویر پیش نمایش
+        function readURL(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    $('#imagePreview').attr('src', e.target.result);
+                }
+
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        $("#file-input").change(function(){
+            readURL(this);
         });
 
     </script>
@@ -383,7 +404,7 @@ include '../index.php';
 
                      <!-- محتوای تب حساب بانکی -->
                     <div id="bank" class="tab-content p-4">
-                        <button type="button" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mb-4"><i class="fas fa-plus"></i> افزودن حساب بانکی</button>
+                         <button type="button" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mb-4"><i class="fas fa-plus"></i> افزودن حساب بانکی</button>
                          <!-- در اینجا باید اطلاعات حساب بانکی به صورت داینامیک اضافه شود -->
                     </div>
 

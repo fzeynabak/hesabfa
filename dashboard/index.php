@@ -2,6 +2,7 @@
 $page = '/hesabfa/dashboard/index.php'; // تعیین صفحه فعال
 include '../index.php';
 ?>
+
         <!-- محتوای اصلی -->
         <div class="flex-1 p-4">
             <h2 class="text-2xl font-bold mb-4">داشبورد</h2>

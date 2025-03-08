@@ -1,13 +1,13 @@
 <?php
 
-// اتصال به پایگاه داده
-include '../database.php';
-
 // دریافت ID شخص از URL
 $id = $_GET['id'];
 
-// Query برای حذف شخص
-$sql = "DELETE FROM ashkhas WHERE id = " . escapeString($id);
+// اتصال به پایگاه داده
+include '../database.php';
+
+// Query برای حذف شخص با ID مشخص
+$sql = "DELETE FROM ashkhas WHERE id = " . $id;
 
 // اجرای Query
 if (executeQuery($sql)) {
@@ -19,7 +19,7 @@ if (executeQuery($sql)) {
 // بستن اتصال
 closeConnection();
 
-// انتقال به صفحه لیست اشخاص با پیام
+// انتقال به صفحه اصلی با پیام
 header("Location: ashkhas.php?message=" . urlencode($message));
 exit;
 
