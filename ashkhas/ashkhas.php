@@ -1,5 +1,6 @@
-<?php 
-$page = 'ashkhas'; // تعیین صفحه فعال
+<?php $page = 'ashkhas/ashkhas.php'; include '../index.php'; ?>
+<?php
+$page = 'ashkhas/ashkhas.php'; // تعیین صفحه فعال
 include '../index.php';
 ?>
         <!-- محتوای اصلی -->

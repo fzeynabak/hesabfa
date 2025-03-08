@@ -1,6 +1,7 @@
-<?php 
-$page = 'dashboard'; // تعیین صفحه فعال
-include '../index.php'; 
+<?php $page = 'dashboard/index.php'; include '../index.php'; ?>
+<?php
+$page = 'dashboard/index.php'; // تعیین صفحه فعال
+include '../index.php';
 ?>
         <!-- محتوای اصلی -->
         <div class="flex-1 p-4">

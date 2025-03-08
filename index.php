@@ -61,6 +61,21 @@
             }
             dropdownContent.classList.toggle("show");
         }
+
+         // کد JavaScript برای اعمال استایل active به منوی فعال
+        document.addEventListener("DOMContentLoaded", function() {
+            var currentPage = window.location.pathname.split('/').pop(); // دریافت نام فایل صفحه فعلی
+            var menuLinks = document.querySelectorAll("#sidebar a"); // انتخاب تمام لینک های منو
+
+            for (var i = 0; i < menuLinks.length; i++) {
+                var link = menuLinks[i];
+                var linkPath = link.getAttribute('href');
+
+                if (linkPath === currentPage) { // بررسی تطابق نام فایل
+                    link.classList.add("active-menu"); // اعمال استایل active
+                }
+            }
+        });
     </script>
 </head>
 <body class="bg-gray-100">
@@ -68,7 +83,7 @@
     <div class="flex h-screen">
 
         <!-- منوی سمت راست -->
-        <div class="w-64 bg-gray-800 text-white">
+        <div class="w-64 bg-gray-800 text-white" id="sidebar">
             <div class="p-4">
                 <h1 class="text-2xl font-bold">Hesabfa</h1>
             </div>
