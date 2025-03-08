@@ -6,40 +6,18 @@
     <title>Hesabfa - برنامه حسابداری</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="assets/css/style.css"> <!-- لینک به فایل استایل -->
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            const menuItems = document.querySelectorAll('#sidebar li');
-
-            menuItems.forEach(item => {
-                if (item.querySelector('.submenu')) {
-                    item.addEventListener('click', function(e) {
-                        e.stopPropagation();
-                        this.classList.toggle('active');
-                        this.querySelector('.submenu').style.display = this.classList.contains('active') ? 'block' : 'none';
-                    });
-                }
-            });
-
-            var currentPage = window.location.pathname;
-            var menuLinks = document.querySelectorAll("#sidebar a");
-
-            for (var i = 0; i < menuLinks.length; i++) {
-                var link = menuLinks[i];
-                var linkPath = link.getAttribute('href');
-
-                if (linkPath === currentPage) {
-                    link.classList.add("active-menu");
-                }
-            }
-        });
-    </script>
+    <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body class="bg-gray-100">
 
+    <!-- Sidebar Toggle Button (Mobile Only) -->
+    <div class="sidebar-toggle" onclick="toggleSidebar()">
+        <i class="fas fa-bars"></i>
+    </div>
+
     <div class="flex h-screen">
 
-        <!-- منوی سمت راست -->
+        <!-- Sidebar -->
         <div class="w-64 bg-gray-800 text-white" id="sidebar">
             <div class="p-4">
                 <h1 class="text-2xl font-bold">Hesabfa</h1>
@@ -112,10 +90,9 @@
             </nav>
         </div>
 
-        <!-- محتوای اصلی -->
+        <!-- Main Content -->
         <div class="flex-1 p-4">
             <?php
-                // بررسی کنیم که آیا یک پیام خوش آمدید از طریق GET ارسال شده است یا خیر
                 if (isset($_GET['message'])) {
                     echo '<div class="bg-green-200 text-green-800 p-3 rounded mb-4">' . htmlspecialchars($_GET['message']) . '</div>';
                 }
@@ -125,6 +102,39 @@
         </div>
 
     </div>
+
+    <script>
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            sidebar.classList.toggle('open');
+        }
+
+        document.addEventListener("DOMContentLoaded", function() {
+            const menuItems = document.querySelectorAll('#sidebar li');
+
+            menuItems.forEach(item => {
+                if (item.querySelector('.submenu')) {
+                    item.addEventListener('click', function(e) {
+                        e.stopPropagation();
+                        this.classList.toggle('active');
+                        this.querySelector('.submenu').style.display = this.classList.contains('active') ? 'block' : 'none';
+                    });
+                }
+            });
+
+            var currentPage = window.location.pathname;
+            var menuLinks = document.querySelectorAll("#sidebar a");
+
+            for (var i = 0; i < menuLinks.length; i++) {
+                var link = menuLinks[i];
+                var linkPath = link.getAttribute('href');
+
+                if (linkPath === currentPage) {
+                    link.classList.add("active-menu");
+                }
+            }
+        });
+    </script>
 
 </body>
 </html>
