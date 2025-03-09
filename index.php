@@ -30,9 +30,16 @@
                         <ul class="submenu">
                             <li><a href="/hesabfa/person/add_person.php"><i class="fas fa-plus ml-2"></i> فرد جدید</a></li>
                             <li><a href="/hesabfa/person/person.php"><i class="fas fa-list ml-2"></i> افراد</a></li>
-                            <li><a href="/hesabfa/person/person_categories.php"><i class="fas fa-list ml-2"></i> دسته بندی ها</a></li>
                         </ul>
                     </li>
+
+                    <li class="mb-2">
+                    <a href="#"><i class="fas fa-layer-group ml-2"></i> دسته‌بندی‌ها</a>
+                    <ul class="submenu">
+                        <li><a href="/hesabfa/categories/add_category.php"><i class="fas fa-plus ml-2"></i> دسته‌بندی جدید</a></li>
+                        <li><a href="/hesabfa/categories/list_categories.php"><i class="fas fa-list ml-2"></i> لیست دسته‌بندی‌ها</a></li>
+                    </ul>
+                </li>
                     <li class="mb-2">
                         <a href="#"><i class="fas fa-box-open ml-2"></i> کالاها و خدمات</a>
                         <ul class="submenu">
