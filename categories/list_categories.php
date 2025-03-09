@@ -58,7 +58,12 @@ $result = executeQuery($sql);
                 <?php if ($result && $result->num_rows > 0): ?>
                     <?php while ($row = $result->fetch_assoc()): ?>
                         <tr class="hover:bg-gray-50">
-                            <td class="px-6 py-4 whitespace-nowrap"><?php echo htmlspecialchars($row['code']); ?></td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+    <a href="view_category.php?id=<?php echo $row['id']; ?>" 
+       class="text-indigo-600 hover:text-indigo-800 hover:underline font-medium">
+        <?php echo htmlspecialchars($row['code']); ?>
+    </a>
+</td>
                             <td class="px-6 py-4 whitespace-nowrap font-medium"><?php echo htmlspecialchars($row['name']); ?></td>
                             <td class="px-6 py-4 whitespace-nowrap"><?php echo htmlspecialchars($row['parent_name'] ?? '---'); ?></td>
                             <td class="px-6 py-4"><?php echo htmlspecialchars($row['description']); ?></td>
