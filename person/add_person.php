@@ -5,7 +5,6 @@ include '../index.php';
 
 <!-- حذف CDN تیلویند و استفاده از نسخه محلی -->
 <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 <link rel="stylesheet" href="../assets/css/style.css">
 
@@ -24,7 +23,6 @@ include '../index.php';
                         <label class="block text-gray-700 text-sm font-bold mb-2" for="code_hesabdari">
                             کد حسابداری:
                         </label>
-                        <!-- قسمت تولید کد حسابداری را به این صورت تغییر دهید -->
                         <div class="flex">
                             <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ml-2" 
                                    id="code_hesabdari" 
@@ -87,14 +85,23 @@ include '../index.php';
                         </label>
                     </div>
 
-                    <!-- جایگزینی بخش دسته‌بندی -->
+                    <!-- بخش دسته‌بندی با ظاهر جدید -->
                     <div class="mb-4">
                         <label class="block text-gray-700 text-sm font-bold mb-2">
                             دسته‌بندی‌ها:
                         </label>
-                        <?php include 'categories/category_modal.php'; ?>
+                        <div class="category-component">
+                            <select id="category-select" class="w-full p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" multiple>
+                                <option value="">در حال بارگذاری دسته‌بندی‌ها...</option>
+                            </select>
+                        </div>
+                        <div id="selectedCategories" class="flex flex-wrap gap-2 mt-2">
+                            <!-- دسته‌بندی‌های انتخاب شده اینجا نمایش داده می‌شوند -->
+                        </div>
+                        <input type="hidden" id="categoryIds" name="category_ids" value="">
                     </div>
                 </div>
+                
             </div>
             <div class="w-1/4">
                 <!-- تصویر شخص -->
@@ -117,7 +124,7 @@ include '../index.php';
             <div class="border-b border-gray-200">
                 <ul class="flex flex-wrap -mb-px text-sm font-medium text-center">
                     <li class="mr-2">
-                        <button type="button" class="tablinks inline-flex p-4 rounded-t-lg border-b-2 border-transparent hover:text-gray-600 hover:border-gray-300 group" onclick="openTab(event, 'general')">
+                        <button type="button" class="tablinks inline-flex p-4 rounded-t-lg border-b-2 border-transparent hover:text-gray-600 hover:border-gray-300 group border-blue-500" onclick="openTab(event, 'general')">
                             <i class="fas fa-info-circle ml-2"></i>
                             عمومی
                         </button>
@@ -203,15 +210,14 @@ include '../index.php';
                     </div>
                     <div class="mb-4">
                         <label class="block text-gray-700 text-sm font-bold mb-2" for="tozihat">
-                            توضیحات:
+                        توضیحات:
                         </label>
                         <textarea class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="tozihat" name="tozihat" placeholder="توضیحات"></textarea>
                     </div>
                 </div>
             </div>
 
-            <!-- محتوای تب اطلاعات آدرس -->
-            <div id="address" class="tab-content p-4">
+            <div id="address" class="tab-content p-4 hidden">
                 <div class="grid grid-cols-1 gap-4">
                     <div class="mb-4">
                         <label class="block text-gray-700 text-sm font-bold mb-2" for="address_text">
@@ -246,8 +252,7 @@ include '../index.php';
                 </div>
             </div>
 
-            <!-- محتوای تب اطلاعات تماس -->
-            <div id="contact" class="tab-content p-4">
+            <div id="contact" class="tab-content p-4 hidden">
                 <div class="grid grid-cols-1 gap-4">
                     <div class="mb-4">
                         <label class="block text-gray-700 text-sm font-bold mb-2" for="telephone">
@@ -300,37 +305,36 @@ include '../index.php';
                 </div>
             </div>
 
-            <!-- محتوای تب حساب بانکی -->
-            <div id="bank" class="tab-content p-4">
-                <button type="button" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mb-4"><i class="fas fa-plus"></i> افزودن حساب بانکی</button>
-                <!-- در اینجا باید اطلاعات حساب بانکی به صورت داینامیک اضافه شود -->
-
+            <div id="bank" class="tab-content p-4 hidden">
+                <button type="button" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mb-4">
+                    <i class="fas fa-plus ml-1"></i>
+                    افزودن حساب بانکی
+                </button>
+                <!-- در اینجا لیست حساب‌های بانکی نمایش داده می‌شود -->
             </div>
 
-            <!-- محتوای تب سایر -->
-            <div id="other" class="tab-content p-4">
+            <div id="other" class="tab-content p-4 hidden">
                 <div class="grid grid-cols-1 gap-4">
                     <div class="mb-4">
                         <label class="block text-gray-700 text-sm font-bold mb-2" for="birth_date">
                             تاریخ تولد:
                         </label>
-                        <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="birth_date" name="birth_date" type="date" placeholder="تاریخ تولد">
+                        <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="birth_date" name="birth_date" type="date">
                     </div>
                     <div class="mb-4">
                         <label class="block text-gray-700 text-sm font-bold mb-2" for="marriage_date">
                             تاریخ ازدواج:
                         </label>
-                        <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="marriage_date" name="marriage_date" type="date" placeholder="تاریخ ازدواج">
+                        <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="marriage_date" name="marriage_date" type="date">
                     </div>
                     <div class="mb-4">
                         <label class="block text-gray-700 text-sm font-bold mb-2" for="membership_date">
                             تاریخ عضویت:
                         </label>
-                        <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="membership_date" name="membership_date" type="date" placeholder="تاریخ عضویت">
+                        <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="membership_date" name="membership_date" type="date">
                     </div>
                 </div>
             </div>
-
         </div>
 
         <div class="flex items-center justify-between mt-4">
@@ -339,11 +343,11 @@ include '../index.php';
             </button>
         </div>
     </form>
-    <?php include 'categories/category_modal.php'; ?>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="../assets/js/main.js"></script>
-    <script src="../assets/js/category-dropdown.js"></script>
 </div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="../assets/js/main.js"></script>
+<script src="../assets/js/category-dropdown.js"></script>
 
 <script>
 function openTab(evt, tabName) {
@@ -360,16 +364,8 @@ function openTab(evt, tabName) {
     evt.currentTarget.className += " border-blue-500";
 }
 
-function generateCode() {
-    // Logic to generate code
-}
-
-function openCategoryModal() {
-    // Logic to open category modal
-}
-
 document.addEventListener("DOMContentLoaded", function() {
+    // نمایش تب عمومی به صورت پیش‌فرض
     document.getElementById("general").style.display = "block";
 });
-
 </script>

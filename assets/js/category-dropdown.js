@@ -1,21 +1,17 @@
-/**
- * مدیریت دسته‌بندی‌های اشخاص
- * نسخه 1.0.0
- */
-
 document.addEventListener('DOMContentLoaded', function() {
     // تعریف متغیرهای سراسری
     const searchInput = document.getElementById('categorySearch');
     const dropdown = document.getElementById('categoryDropdown');
     const selectedContainer = document.getElementById('selectedCategoriesContainer');
     const categoryIdsInput = document.getElementById('categoryIds');
+    const mainCategoryIdInput = document.getElementById('mainCategoryId');
     
     let selectedCategories = new Set();
     let mainCategoryId = null;
     let categories = [];
     let searchTimeout;
 
-    // جستجوی دسته‌بندی‌ها با تاخیر برای جلوگیری از درخواست‌های مکرر
+    // مدیریت جستجو با تاخیر
     if (searchInput) {
         searchInput.addEventListener('input', function(e) {
             clearTimeout(searchTimeout);
@@ -26,18 +22,16 @@ document.addEventListener('DOMContentLoaded', function() {
                     fetchCategories(searchTerm);
                     showDropdown();
                 } else {
-                    hideDropdown();
+                    fetchCategories(); // دریافت همه دسته‌بندی‌ها
+                    showDropdown();
                 }
             }, 300);
         });
 
-        // فوکوس روی فیلد جستجو
+        // نمایش همه دسته‌بندی‌ها با کلیک روی فیلد جستجو
         searchInput.addEventListener('focus', function() {
-            if (categories.length > 0) {
-                showDropdown();
-            } else {
-                fetchCategories();
-            }
+            fetchCategories();
+            showDropdown();
         });
     }
 
@@ -50,8 +44,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // دریافت دسته‌بندی‌ها از سرور
     function fetchCategories(search = '') {
-        const url = `../categories/get_categories.php${search ? '?search=' + encodeURIComponent(search) : ''}`;
-        fetch(url)
+        const apiUrl = '../categories/get_categories.php' + (search ? `?search=${encodeURIComponent(search)}` : '');
+        
+        fetch(apiUrl)
             .then(response => {
                 if (!response.ok) {
                     throw new Error('خطا در دریافت اطلاعات از سرور');
@@ -59,18 +54,29 @@ document.addEventListener('DOMContentLoaded', function() {
                 return response.json();
             })
             .then(data => {
-                categories = Array.isArray(data) ? data : [];
-                renderDropdown();
+                if (Array.isArray(data)) {
+                    categories = data;
+                    renderDropdown();
+                } else {
+                    console.error('داده‌های دریافتی معتبر نیستند:', data);
+                    throw new Error('داده‌های دریافتی معتبر نیستند');
+                }
             })
             .catch(error => {
                 console.error('خطا در دریافت دسته‌بندی‌ها:', error);
-                // نمایش پیام خطا به کاربر
-                const errorDiv = document.createElement('div');
-                errorDiv.className = 'text-red-500 text-sm mt-1';
-                errorDiv.textContent = 'خطا در دریافت دسته‌بندی‌ها. لطفاً مجدداً تلاش کنید.';
-                searchInput.parentNode.appendChild(errorDiv);
-                setTimeout(() => errorDiv.remove(), 3000);
+                showError('خطا در دریافت دسته‌بندی‌ها. لطفاً مجدداً تلاش کنید.');
             });
+    }
+
+    // نمایش پیام خطا
+    function showError(message) {
+        const errorDiv = document.createElement('div');
+        errorDiv.className = 'text-red-500 text-sm mt-1';
+        errorDiv.textContent = message;
+        if (searchInput && searchInput.parentNode) {
+            searchInput.parentNode.appendChild(errorDiv);
+            setTimeout(() => errorDiv.remove(), 3000);
+        }
     }
 
     // نمایش دراپ‌داون
@@ -159,10 +165,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // بروزرسانی نمایش دسته‌بندی‌های انتخاب شده
     function updateSelectedCategories() {
-        if (!selectedContainer || !categoryIdsInput) return;
+        if (!selectedContainer || !categoryIdsInput || !mainCategoryIdInput) return;
 
         selectedContainer.innerHTML = '';
         categoryIdsInput.value = Array.from(selectedCategories).join(',');
+        mainCategoryIdInput.value = mainCategoryId || '';
 
         Array.from(selectedCategories).forEach(id => {
             const category = categories.find(c => parseInt(c.id) === id);
