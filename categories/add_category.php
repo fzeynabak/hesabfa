@@ -11,7 +11,6 @@ include '../database.php';
     <div class="bg-white rounded-lg shadow p-6">
         <form id="categoryForm" method="post" enctype="multipart/form-data">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <!-- جایگزین کردن بخش کد دسته‌بندی در add_category.php -->
                 <div class="mb-4">
                     <label class="block text-gray-700 text-sm font-bold mb-2" for="code">
                         کد دسته‌بندی
@@ -37,7 +36,6 @@ include '../database.php';
                            placeholder="نام دسته‌بندی را وارد کنید">
                 </div>
 
-                <!-- اضافه کردن بخش آپلود تصویر -->
                 <div class="mb-4 col-span-2">
                     <label class="block text-gray-700 text-sm font-bold mb-2" for="image">
                         تصویر دسته‌بندی
@@ -62,7 +60,6 @@ include '../database.php';
                     </div>
                 </div>
 
-                <!-- ادامه فرم -->
                 <div class="mb-4">
                     <label class="block text-gray-700 text-sm font-bold mb-2" for="parent_id">
                         دسته‌بندی والد

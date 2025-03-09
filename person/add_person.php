@@ -3,8 +3,8 @@ $page = '/hesabfa/person/add_person.php';
 include '../index.php';
 ?>
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" integrity="sha512-wnea99uKIC3OJeOA1UDjUxWxYEjbz5Bi6qidw9/tKtCuj/j7W3tGYWVMvPQRwUjvL5j6ykjFLEGwdBSXVcKGiw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" integrity="sha512-wnea99uKIC3OJeOA1UDjUxWxYEjbz5Bi6qidw9/tKtCuj/j7W3tGYWVMvPQRwUjvL5j6ykjFLEd5P8gW4A1G2w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9+6Q5v2f8NQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <link rel="stylesheet" href="../assets/css/style.css">
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -24,7 +24,7 @@ include '../index.php';
                         </label>
                         <div class="flex">
                             <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="code_hesabdari" name="code_hesabdari" type="text" placeholder="کد حسابداری">
-                            <button type="button" onclick="generateCode()" class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"><i class="fas fa-magic"></i></button>
+                            <button type="button" onclick="generateCode()" class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"><i class="fas fa-sync"></i></button>
                         </div>
                     </div>
                     <div class="mb-4">
@@ -59,22 +59,6 @@ include '../index.php';
                     </div>
                     <div class="mb-4">
                         <label class="block text-gray-700 text-sm font-bold mb-2">
-                            دسته‌بندی‌ها:
-                        </label>
-                        <div class="flex flex-col">
-                            <div class="flex items-center">
-                                <input type="hidden" id="categoryIds" name="category_ids" value="">
-                                <div id="selectedCategories" class="flex-1 flex flex-wrap gap-2 min-h-[38px] p-1 bg-gray-50 border rounded-lg">
-                                    <!-- دسته‌بندی‌های انتخاب شده اینجا نمایش داده می‌شوند -->
-                                </div>
-                                <button type="button" onclick="openCategoryModal()" class="mr-2 bg-blue-500 hover:bg-blue-600 text-white px-3 py-2 rounded-lg">
-                                    <i class="fas fa-plus"></i>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="mb-4">
-                        <label class="block text-gray-700 text-sm font-bold mb-2">
                             نوع:
                         </label>
                         <label class="inline-flex items-center">
@@ -84,8 +68,6 @@ include '../index.php';
                         <label class="inline-flex items-center">
                             <input type="checkbox" class="form-checkbox h-5 w-5 text-blue-600" name="type_supplier" value="1">
                             <span class="ml-2 text-gray-700">تامین کننده</span>
-                        </label>
-                        <span class="ml-2 text-gray-700">سهامدار</span>
                         </label>
                         <label class="inline-flex items-center">
                             <input type="checkbox" class="form-checkbox h-5 w-5 text-blue-600" name="type_employee" value="1">
@@ -115,7 +97,7 @@ include '../index.php';
             <div class="border-b border-gray-200">
                 <ul class="flex flex-wrap -mb-px text-sm font-medium text-center">
                     <li class="mr-2">
-                        <button type="button" class="tablinks inline-flex p-4 rounded-t-lg border-b-2 border-transparent hover:text-gray-600 hover:border-gray-300 group" onclick="openTab(event, 'general')" id="defaultOpen">
+                        <button type="button" class="tablinks inline-flex p-4 rounded-t-lg border-b-2 border-transparent hover:text-gray-600 hover:border-gray-300 group" onclick="openTab(event, 'general')">
                             <i class="fas fa-info-circle ml-2"></i>
                             عمومی
                         </button>
@@ -293,7 +275,7 @@ include '../index.php';
                         <label class="block text-gray-700 text-sm font-bold mb-2" for="website">
                             وب سایت:
                         </label>
-                        <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="website" name="website" type="text" placeholder="وب سایت">
+                        <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="website" name="website" type="url" placeholder="وب سایت">
                     </div>
                 </div>
             </div>
@@ -311,22 +293,23 @@ include '../index.php';
                         <label class="block text-gray-700 text-sm font-bold mb-2" for="birth_date">
                             تاریخ تولد:
                         </label>
-                        <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="birth_date" name="birth_date" type="text" placeholder="تاریخ تولد">
+                        <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="birth_date" name="birth_date" type="date" placeholder="تاریخ تولد">
                     </div>
                     <div class="mb-4">
                         <label class="block text-gray-700 text-sm font-bold mb-2" for="marriage_date">
                             تاریخ ازدواج:
                         </label>
-                        <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="marriage_date" name="marriage_date" type="text" placeholder="تاریخ ازدواج">
+                        <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="marriage_date" name="marriage_date" type="date" placeholder="تاریخ ازدواج">
                     </div>
                     <div class="mb-4">
                         <label class="block text-gray-700 text-sm font-bold mb-2" for="membership_date">
                             تاریخ عضویت:
                         </label>
-                        <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="membership_date" name="membership_date" type="text" placeholder="تاریخ عضویت" value="<?php echo date("Y/m/d"); ?>" readonly>
+                        <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="membership_date" name="membership_date" type="date" placeholder="تاریخ عضویت">
                     </div>
                 </div>
             </div>
+
         </div>
 
         <div class="flex items-center justify-between mt-4">
@@ -337,75 +320,26 @@ include '../index.php';
     </form>
 </div>
 
-<!-- پاپ آپ دسته‌بندی -->
-<div id="categoryModal" class="fixed inset-0 bg-gray-600 bg-opacity-50 hidden items-center justify-center z-50">
-    <div class="bg-white p-6 rounded-lg shadow-lg w-11/12 md:w-3/4 lg:w-1/2 max-h-[90vh] flex flex-col">
-        <div class="flex justify-between items-center mb-4">
-            <h3 class="text-xl font-bold text-gray-800">مدیریت دسته‌بندی‌ها</h3>
-            <button onclick="closeCategoryModal()" class="text-gray-600 hover:text-gray-800">
-                <i class="fas fa-times"></i>
-            </button>
-        </div>
-        <div class="flex gap-2 mb-4">
-            <input type="text" id="categorySearch" placeholder="جستجو در دسته‌بندی‌ها..." class="flex-1 px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500">
-            <button onclick="showAddCategoryForm()" class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded">
-                <i class="fas fa-plus ml-1"></i>
-                دسته‌بندی جدید
-            </button>
-        </div>
-        <div id="categoriesList" class="overflow-y-auto flex-1 min-h-[300px] space-y-2">
-            <!-- دسته‌بندی‌ها اینجا لود می‌شوند -->
-        </div>
-        <div class="modal-footer">
-            <button onclick="closeCategoryModal()" class="px-4 py-2 bg-gray-200 hover:bg-gray-300 rounded-lg">
-                انصراف
-            </button>
-            <button onclick="saveCategorySelections()" class="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg">
-                تایید
-            </button>
-        </div>
-    </div>
-</div>
+<script>
+function openTab(evt, tabName) {
+    var i, tabcontent, tablinks;
+    tabcontent = document.getElementsByClassName("tab-content");
+    for (i = 0; i < tabcontent.length; i++) {
+        tabcontent[i].style.display = "none";
+    }
+    tablinks = document.getElementsByClassName("tablinks");
+    for (i = 0; i < tablinks.length; i++) {
+        tablinks[i].className = tablinks[i].className.replace(" border-blue-500", "");
+    }
+    document.getElementById(tabName).style.display = "block";
+    evt.currentTarget.className += " border-blue-500";
+}
 
-<!-- مودال افزودن/ویرایش دسته‌بندی -->
-<div id="categoryForm" class="fixed inset-0 bg-gray-600 bg-opacity-50 hidden items-center justify-center z-50">
-    <div class="bg-white p-6 rounded-lg shadow-lg w-11/12 md:w-2/3 lg:w-1/2">
-    <h3 class="text-xl font-bold text-gray-800 mb-4" id="categoryFormTitle">افزودن دسته‌بندی جدید</h3>
-        <form id="addEditCategoryForm" class="space-y-4">
-            <input type="hidden" id="categoryId">
-            <div>
-                <label class="block text-gray-700 text-sm font-bold mb-2" for="categoryCode">
-                    کد دسته‌بندی
-                </label>
-                <div class="flex gap-2">
-                    <input type="text" id="categoryCode" class="flex-1 px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
-                    <button type="button" onclick="generateCategoryCode()" class="px-3 py-2 bg-green-500 hover:bg-green-600 text-white rounded-lg">
-                        <i class="fas fa-magic"></i>
-                    </button>
-                </div>
-            </div>
-            <div>
-                <label class="block text-gray-700 text-sm font-bold mb-2" for="categoryName">
-                    نام دسته‌بندی <span class="text-red-500">*</span>
-                </label>
-                <input type="text" id="categoryName" required class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
-            </div>
-            <div>
-                <label class="block text-gray-700 text-sm font-bold mb-2" for="categoryDescription">
-                    توضیحات
-                </label>
-                <textarea id="categoryDescription" rows="3" class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
-            </div>
-            <div class="modal-footer">
-                <button type="button" onclick="closeCategoryForm()" class="px-4 py-2 bg-gray-200 hover:bg-gray-300 rounded-lg">
-                    انصراف
-                </button>
-                <button type="submit" class="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg">
-                    ذخیره
-                </button>
-            </div>
-        </form>
-    </div>
-</div>
-</body>
-</html>
+function generateCode() {
+    // Logic to generate code
+}
+
+document.addEventListener("DOMContentLoaded", function() {
+    document.getElementById("general").style.display = "block";
+});
+</script>

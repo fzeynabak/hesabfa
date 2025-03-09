@@ -112,7 +112,7 @@ if (!$category) {
                 </button>
                 <button type="submit" 
                         class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
-                    بروزرسانی
+                    بروز رسانی
                 </button>
             </div>
         </form>
@@ -143,10 +143,10 @@ document.getElementById('categoryForm').addEventListener('submit', function(e) {
     .then(response => response.json())
     .then(data => {
         if (data.success) {
-            alert('دسته‌بندی با موفقیت بروزرسانی شد');
+            alert('دسته‌بندی با موفقیت بروز رسانی شد');
             window.location.href = 'list_categories.php';
         } else {
-            alert(data.message || 'خطا در بروزرسانی دسته‌بندی');
+            alert(data.message || 'خطا در بروز رسانی دسته‌بندی');
         }
     })
     .catch(error => {

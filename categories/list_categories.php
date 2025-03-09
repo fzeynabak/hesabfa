@@ -15,6 +15,21 @@ $sql = "SELECT c1.*,
         FROM categories c1" . $where . "
         ORDER BY c1.name ASC";
 $result = executeQuery($sql);
+
+$categories = [];
+while ($row = $result->fetch_assoc()) {
+    $categories[] = [
+        'id' => $row['id'],
+        'name' => $row['name'],
+        'parent_name' => $row['parent_name'],
+        'description' => $row['description'],
+        'status' => $row['status']
+    ];
+}
+
+// بازگرداندن داده‌ها به فرمت JSON
+header('Content-Type: application/json');
+echo json_encode($categories);
 ?>
 
 <div class="flex-1 p-4">
@@ -59,11 +74,11 @@ $result = executeQuery($sql);
                     <?php while ($row = $result->fetch_assoc()): ?>
                         <tr class="hover:bg-gray-50">
                             <td class="px-6 py-4 whitespace-nowrap">
-    <a href="view_category.php?id=<?php echo $row['id']; ?>" 
-       class="text-indigo-600 hover:text-indigo-800 hover:underline font-medium">
-        <?php echo htmlspecialchars($row['code']); ?>
-    </a>
-</td>
+                                <a href="view_category.php?id=<?php echo $row['id']; ?>" 
+                                   class="text-indigo-600 hover:text-indigo-800 hover:underline font-medium">
+                                    <?php echo htmlspecialchars($row['code']); ?>
+                                </a>
+                            </td>
                             <td class="px-6 py-4 whitespace-nowrap font-medium"><?php echo htmlspecialchars($row['name']); ?></td>
                             <td class="px-6 py-4 whitespace-nowrap"><?php echo htmlspecialchars($row['parent_name'] ?? '---'); ?></td>
                             <td class="px-6 py-4"><?php echo htmlspecialchars($row['description']); ?></td>
