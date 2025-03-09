@@ -1,7 +1,24 @@
-// متغیرهای سراسری
-const selectedCategories = new Set();
+// تعریف متغیرهای سراسری در ابتدای فایل
+let selectedCategories = new Set();
 let mainCategoryId = null;
 
+// اضافه کردن Event Listener برای DOM
+document.addEventListener('DOMContentLoaded', function() {
+    // مقداردهی اولیه دسته‌بندی‌های انتخاب شده
+    const initialCategories = document.getElementById('categoryIds')?.value;
+    if (initialCategories) {
+        initialCategories.split(',').forEach(id => selectedCategories.add(parseInt(id)));
+        updateSelectedCategoriesDisplay();
+    }
+
+    // اضافه کردن event listener برای جستجو
+    const searchInput = document.getElementById('categorySearch');
+    if (searchInput) {
+        searchInput.addEventListener('input', (e) => {
+            loadCategories(e.target.value);
+        });
+    }
+});
 // مدیریت مدال دسته‌بندی
 function openCategoryModal() {
     const modal = document.getElementById('categoryModal');

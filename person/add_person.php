@@ -104,6 +104,7 @@ include '../index.php';
                         </button>
                     </div>
                 </div>
+                
             </div>
             <div class="w-1/4">
                 <!-- تصویر شخص -->
@@ -313,6 +314,7 @@ include '../index.php';
             <div id="bank" class="tab-content p-4">
                 <button type="button" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mb-4"><i class="fas fa-plus"></i> افزودن حساب بانکی</button>
                 <!-- در اینجا باید اطلاعات حساب بانکی به صورت داینامیک اضافه شود -->
+
             </div>
 
             <!-- محتوای تب سایر -->
@@ -348,7 +350,7 @@ include '../index.php';
         </div>
     </form>
     <?php include '/categories/category_modal.php'; ?>
-    
+    <script src="../assets/js/category-manager.js"></script>
 </div>
 
 <script>

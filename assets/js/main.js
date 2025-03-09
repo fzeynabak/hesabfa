@@ -355,7 +355,7 @@ document.getElementById('addEditCategoryForm').addEventListener('submit', functi
     });
 });
 
-const selectedCategories = new Set();
+
 const initialCategories = document.getElementById('categoryIds').value;
 if (initialCategories) {
     initialCategories.split(',').forEach(id => selectedCategories.add(parseInt(id)));
