@@ -164,3 +164,48 @@ $(document).ready(function() {
         updateSelectedCategoriesDisplay();
     }
 });
+function openCategoryModal() {
+    const modal = document.getElementById('categoryModal');
+    if (modal) {
+        modal.style.display = 'flex';
+        loadCategories();
+        return;
+    }
+
+    // ایجاد مودال اگر وجود نداشت
+    const modalHtml = `
+        <div id="categoryModal" class="category-modal" style="display: none;">
+            <div class="category-modal-content">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="text-xl font-bold">مدیریت دسته‌بندی‌ها</h3>
+                    <button onclick="closeCategoryModal()" class="text-gray-500 hover:text-gray-700">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+
+                <div class="flex gap-2 mb-4">
+                    <input type="text" id="categorySearch" 
+                           class="flex-1 px-3 py-2 border rounded-md" 
+                           placeholder="جستجو در دسته‌بندی‌ها...">
+                    <button onclick="showNewCategoryForm()" 
+                            class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-md">
+                        <i class="fas fa-plus ml-1"></i>
+                        دسته‌بندی جدید
+                    </button>
+                </div>
+
+                <div id="categoriesList" class="category-list"></div>
+
+                <div class="mt-4 flex justify-end">
+                    <button onclick="saveCategorySelections()" 
+                            class="bg-blue-500 hover:bg-blue-600 text-white px-6 py-2 rounded-md">
+                        تایید
+                    </button>
+                </div>
+            </div>
+        </div>`;
+
+    document.body.insertAdjacentHTML('beforeend', modalHtml);
+    document.getElementById('categoryModal').style.display = 'flex';
+    loadCategories();
+}
