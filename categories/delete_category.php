@@ -1,37 +1,60 @@
 <?php
-session_start();
-require_once('../includes/db_connect.php');
+include '../database.php';
 
-if (isset($_POST['category_id'])) {
-    $category_id = $_POST['category_id'];
-    
-    try {
-        // ابتدا اطلاعات تصویر دسته‌بندی را دریافت می‌کنیم
-        $stmt = $pdo->prepare("SELECT image FROM categories WHERE id = ?");
-        $stmt->execute([$category_id]);
-        $category = $stmt->fetch();
-        
-        if ($category && $category['image']) {
-            // حذف فایل تصویر از سرور
-            $image_path = __DIR__ . '/uploads/categories/' . basename($category['image']);
-            if (file_exists($image_path)) {
-                unlink($image_path);
-            }
-        }
-        
-        // حذف دسته‌بندی از دیتابیس
-        $stmt = $pdo->prepare("DELETE FROM categories WHERE id = ?");
-        $result = $stmt->execute([$category_id]);
-        
-        if ($result) {
-            echo json_encode(['status' => 'success', 'message' => 'دسته‌بندی با موفقیت حذف شد']);
-        } else {
-            throw new Exception("خطا در حذف دسته‌بندی");
-        }
-    } catch (Exception $e) {
-        error_log($e->getMessage());
-        echo json_encode(['status' => 'error', 'message' => 'خطا در ارتباط با سرور']);
+header('Content-Type: application/json; charset=utf-8');
+
+try {
+    if (!isset($_GET['id'])) {
+        throw new Exception('شناسه دسته‌بندی نامعتبر است');
     }
-} else {
-    echo json_encode(['status' => 'error', 'message' => 'شناسه دسته‌بندی یافت نشد']);
+
+    $id = intval($_GET['id']);
+
+    // بررسی استفاده از این دسته‌بندی در جدول person_categories
+    $usageCheck = executeQuery("SELECT COUNT(*) as count FROM person_categories WHERE category_id = $id");
+    $usage = $usageCheck->fetch_assoc();
+    
+    if ($usage['count'] > 0) {
+        throw new Exception('این دسته‌بندی به یک یا چند شخص متصل است و قابل حذف نیست');
+    }
+
+    // بررسی وجود زیر دسته‌بندی
+    $subcategoryCheck = executeQuery("SELECT COUNT(*) as count FROM categories WHERE parent_id = $id");
+    $subcategories = $subcategoryCheck->fetch_assoc();
+    
+    if ($subcategories['count'] > 0) {
+        throw new Exception('این دسته‌بندی دارای زیر دسته‌بندی است و قابل حذف نیست');
+    }
+
+    // دریافت اطلاعات دسته‌بندی برای حذف تصویر
+    $category = executeQuery("SELECT image FROM categories WHERE id = $id")->fetch_assoc();
+    if (!$category) {
+        throw new Exception('دسته‌بندی مورد نظر یافت نشد');
+    }
+
+    // حذف تصویر اگر وجود داشته باشد
+    if (!empty($category['image'])) {
+        $imagePath = '../' . $category['image'];
+        if (file_exists($imagePath)) {
+            unlink($imagePath);
+        }
+    }
+
+    // حذف دسته‌بندی از دیتابیس
+    $result = executeQuery("DELETE FROM categories WHERE id = $id");
+
+    if ($result) {
+        echo json_encode([
+            'success' => true, 
+            'message' => 'دسته‌بندی با موفقیت حذف شد'
+        ], JSON_UNESCAPED_UNICODE);
+    } else {
+        throw new Exception('خطا در حذف دسته‌بندی');
+    }
+
+} catch (Exception $e) {
+    echo json_encode([
+        'success' => false, 
+        'message' => $e->getMessage()
+    ], JSON_UNESCAPED_UNICODE);
 }
