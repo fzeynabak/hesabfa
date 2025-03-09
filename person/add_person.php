@@ -5,122 +5,11 @@ include '../index.php';
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" integrity="sha512-wnea99uKIC3OJeOA1UDjUxWxYEjbz5Bi6qidw9/tKtCuj/j7W3tGYWVMvPQRwUjvL5j6ykjFLEGwdBSXVcKGiw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="stylesheet" href="../assets/css/style.css">
 
-<style>
-    body {
-        font-family: 'IranSans', sans-serif;
-    }
-
-    .tab-content {
-        display: none;
-    }
-
-    .tab-content.active {
-        display: block;
-    }
-
-    .image-upload {
-        position: relative;
-        max-width: 200px;
-        margin: auto;
-    }
-
-    .image-upload .image-edit {
-        position: absolute;
-        right: 12px;
-        top: 10px;
-        z-index: 1;
-    }
-
-    .image-upload .image-edit input {
-        display: none;
-    }
-
-    .image-upload .image-edit label {
-        display: inline-block;
-        width: 34px;
-        height: 34px;
-        margin-bottom: 0;
-        border-radius: 100%;
-        background: #FFFFFF;
-        border: 1px solid transparent;
-        box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.12);
-        cursor: pointer;
-        font-weight: normal;
-        transition: all 0.3s ease-in-out;
-    }
-
-    .image-upload .image-edit label:hover {
-        background: #f1f1f1;
-        border-color: #d2d2d2;
-    }
-
-    .image-upload .image-preview {
-        width: 192px;
-        height: 192px;
-        position: relative;
-        border-radius: 100%;
-        border: 6px solid #F8F8F8;
-        box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.1);
-    }
-
-    .image-upload .image-preview img {
-        width: 100%;
-        height: 100%;
-        border-radius: 100%;
-        background-color: #F8F8F8;
-        object-fit: cover;
-    }
-</style>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>
-    function generateCode() {
-        //در اینجا باید کد تولید شود و در input قرار بگیرد
-        document.getElementById("code_hesabdari").value = Math.floor(Math.random() * 900000) + 100000;
-    }
+<script src="../assets/js/main.js"></script>
 
-    function openCategoryPopup() {
-        window.open("person_categories.php", "Category Manager", "width=800,height=600");
-    }
-
-    function openTab(evt, tabName) {
-        var i, tabcontent, tablinks;
-        tabcontent = document.getElementsByClassName("tab-content");
-        for (i = 0; i < tabcontent.length; i++) {
-            tabcontent[i].classList.remove("active");
-        }
-        tablinks = document.getElementsByClassName("tablinks");
-        for (i = 0; i < tablinks.length; i++) {
-            tablinks[i].classList.remove("active");
-        }
-        document.getElementById(tabName).classList.add("active");
-        evt.currentTarget.classList.add("active");
-    }
-
-    // نمایش تب عمومی به صورت پیش فرض
-    document.addEventListener("DOMContentLoaded", function() {
-        document.getElementById("defaultOpen").click();
-    });
-
-    // تغییر تصویر پیش نمایش
-    function readURL(input) {
-        if (input.files && input.files[0]) {
-            var reader = new FileReader();
-
-            reader.onload = function(e) {
-                $('#imagePreview').attr('src', e.target.result);
-            }
-
-            reader.readAsDataURL(input.files[0]);
-        }
-    }
-
-    $("#file-input").change(function() {
-        readURL(this);
-    });
-</script>
-
-<!-- محتوای اصلی -->
 <div class="flex-1 p-4">
     <h2 class="text-2xl font-bold mb-4">شخص جدید</h2>
     <form action="save_person.php" method="post" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
@@ -169,12 +58,19 @@ include '../index.php';
                         <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="nickname" name="nickname" type="text" placeholder="نام مستعار">
                     </div>
                     <div class="mb-4">
-                        <label class="block text-gray-700 text-sm font-bold mb-2" for="category">
-                            دسته‌بندی:
+                        <label class="block text-gray-700 text-sm font-bold mb-2">
+                            دسته‌بندی‌ها:
                         </label>
-                        <div class="flex">
-                            <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="category" name="category" type="text" placeholder="دسته‌بندی">
-                            <button type="button" onclick="openCategoryPopup()" class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"><i class="fas fa-plus"></i></button>
+                        <div class="flex flex-col">
+                            <div class="flex items-center">
+                                <input type="hidden" id="categoryIds" name="category_ids" value="">
+                                <div id="selectedCategories" class="flex-1 flex flex-wrap gap-2 min-h-[38px] p-1 bg-gray-50 border rounded-lg">
+                                    <!-- دسته‌بندی‌های انتخاب شده اینجا نمایش داده می‌شوند -->
+                                </div>
+                                <button type="button" onclick="openCategoryModal()" class="mr-2 bg-blue-500 hover:bg-blue-600 text-white px-3 py-2 rounded-lg">
+                                    <i class="fas fa-plus"></i>
+                                </button>
+                            </div>
                         </div>
                     </div>
                     <div class="mb-4">
@@ -189,9 +85,7 @@ include '../index.php';
                             <input type="checkbox" class="form-checkbox h-5 w-5 text-blue-600" name="type_supplier" value="1">
                             <span class="ml-2 text-gray-700">تامین کننده</span>
                         </label>
-                        <label class="inline-flex items-center">
-                            <input type="checkbox" class="form-checkbox h-5 w-5 text-blue-600" name="type_shareholder" value="1">
-                            <span class="ml-2 text-gray-700">سهامدار</span>
+                        <span class="ml-2 text-gray-700">سهامدار</span>
                         </label>
                         <label class="inline-flex items-center">
                             <input type="checkbox" class="form-checkbox h-5 w-5 text-blue-600" name="type_employee" value="1">
@@ -443,17 +337,75 @@ include '../index.php';
     </form>
 </div>
 
+<!-- پاپ آپ دسته‌بندی -->
+<div id="categoryModal" class="fixed inset-0 bg-gray-600 bg-opacity-50 hidden items-center justify-center z-50">
+    <div class="bg-white p-6 rounded-lg shadow-lg w-11/12 md:w-3/4 lg:w-1/2 max-h-[90vh] flex flex-col">
+        <div class="flex justify-between items-center mb-4">
+            <h3 class="text-xl font-bold text-gray-800">مدیریت دسته‌بندی‌ها</h3>
+            <button onclick="closeCategoryModal()" class="text-gray-600 hover:text-gray-800">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="flex gap-2 mb-4">
+            <input type="text" id="categorySearch" placeholder="جستجو در دسته‌بندی‌ها..." class="flex-1 px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500">
+            <button onclick="showAddCategoryForm()" class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded">
+                <i class="fas fa-plus ml-1"></i>
+                دسته‌بندی جدید
+            </button>
+        </div>
+        <div id="categoriesList" class="overflow-y-auto flex-1 min-h-[300px] space-y-2">
+            <!-- دسته‌بندی‌ها اینجا لود می‌شوند -->
+        </div>
+        <div class="modal-footer">
+            <button onclick="closeCategoryModal()" class="px-4 py-2 bg-gray-200 hover:bg-gray-300 rounded-lg">
+                انصراف
+            </button>
+            <button onclick="saveCategorySelections()" class="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg">
+                تایید
+            </button>
+        </div>
+    </div>
 </div>
-<script>
-    // تغییر تصویر پیش نمایش
-    fileInput.onchange = evt => {
-        const [file] = fileInput.files
-        if (file) {
-            imagePreview.src = URL.createObjectURL(file)
-        }
-    }
-</script>
 
+<!-- مودال افزودن/ویرایش دسته‌بندی -->
+<div id="categoryForm" class="fixed inset-0 bg-gray-600 bg-opacity-50 hidden items-center justify-center z-50">
+    <div class="bg-white p-6 rounded-lg shadow-lg w-11/12 md:w-2/3 lg:w-1/2">
+    <h3 class="text-xl font-bold text-gray-800 mb-4" id="categoryFormTitle">افزودن دسته‌بندی جدید</h3>
+        <form id="addEditCategoryForm" class="space-y-4">
+            <input type="hidden" id="categoryId">
+            <div>
+                <label class="block text-gray-700 text-sm font-bold mb-2" for="categoryCode">
+                    کد دسته‌بندی
+                </label>
+                <div class="flex gap-2">
+                    <input type="text" id="categoryCode" class="flex-1 px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    <button type="button" onclick="generateCategoryCode()" class="px-3 py-2 bg-green-500 hover:bg-green-600 text-white rounded-lg">
+                        <i class="fas fa-magic"></i>
+                    </button>
+                </div>
+            </div>
+            <div>
+                <label class="block text-gray-700 text-sm font-bold mb-2" for="categoryName">
+                    نام دسته‌بندی <span class="text-red-500">*</span>
+                </label>
+                <input type="text" id="categoryName" required class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+            </div>
+            <div>
+                <label class="block text-gray-700 text-sm font-bold mb-2" for="categoryDescription">
+                    توضیحات
+                </label>
+                <textarea id="categoryDescription" rows="3" class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
+            </div>
+            <div class="modal-footer">
+                <button type="button" onclick="closeCategoryForm()" class="px-4 py-2 bg-gray-200 hover:bg-gray-300 rounded-lg">
+                    انصراف
+                </button>
+                <button type="submit" class="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg">
+                    ذخیره
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
 </body>
-
 </html>
