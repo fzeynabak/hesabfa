@@ -1,8 +1,10 @@
 body {
-    font-family: 'IranSans', sans-serif;
+    font-family: 'IranSans', Vazir, Tahoma, sans-serif;
+    direction: rtl;
     background-color: #f3f4f6;
     margin: 0;
     overflow-x: hidden;
+    min-height: 100vh;
 }
 
 /* Sidebar */
@@ -291,14 +293,7 @@ body {
     box-sizing: border-box;
 }
 
-body {
-    font-family: 'IranSans', Vazir, Tahoma, sans-serif;
-    direction: rtl;
-    background-color: #f3f4f6;
-    margin: 0;
-    overflow-x: hidden;
-    min-height: 100vh;
-}
+
 
 /* سایدبار */
 #sidebar {
@@ -463,9 +458,7 @@ body {
 
 }
 
-body {
-    font-family: 'IranSans', sans-serif;
-}
+
 
 .tab-content {
     display: none;
