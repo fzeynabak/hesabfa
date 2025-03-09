@@ -45,6 +45,7 @@
                             <li><a href="/hesabfa/products_services/print_barcode.php"><i class="fas fa-barcode ml-2"></i> چاپ بارکد</a></li>
                         </ul>
                     </li>
+                    
                     <li class="mb-2">
                         <a href="#"><i class="fas fa-money-bill ml-2"></i> فروش و درآمد</a>
                         <ul class="submenu">
