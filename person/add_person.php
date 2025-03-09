@@ -22,10 +22,20 @@ include '../index.php';
                         <label class="block text-gray-700 text-sm font-bold mb-2" for="code_hesabdari">
                             کد حسابداری:
                         </label>
-                        <div class="flex">
-                            <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="code_hesabdari" name="code_hesabdari" type="text" placeholder="کد حسابداری">
-                            <button type="button" onclick="generateCode()" class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"><i class="fas fa-sync"></i></button>
-                        </div>
+                        <!-- قسمت تولید کد حسابداری را به این صورت تغییر دهید -->
+<div class="flex">
+    <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ml-2" 
+           id="code_hesabdari" 
+           name="code_hesabdari" 
+           type="text" 
+           placeholder="کد حسابداری را وارد کنید">
+    <button type="button" 
+            onclick="generateCode()" 
+            class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+            <i class="fas fa-sync-alt ml-1"></i>
+            تولید
+    </button>
+</div>
                     </div>
                     <div class="mb-4">
                         <label class="block text-gray-700 text-sm font-bold mb-2" for="company">

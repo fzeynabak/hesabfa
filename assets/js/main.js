@@ -68,8 +68,28 @@ function formatDate(date) {
 }
 
 // توابع دسته‌بندی‌ها
+// تابع جدید generateCode که قابلیت تولید کد یکتا را دارد
 function generateCode() {
-    document.getElementById("code_hesabdari").value = Math.floor(Math.random() * 900000) + 100000;
+    // تولید یک عدد 6 رقمی تصادفی
+    let prefix = new Date().getFullYear().toString().substr(-2); // گرفتن 2 رقم آخر سال جاری
+    let random = Math.floor(Math.random() * 9000) + 1000; // تولید عدد 4 رقمی تصادفی
+    let code = prefix + random.toString(); // ترکیب سال و عدد تصادفی
+    
+    // قرار دادن کد در فیلد ورودی
+    let codeInput = document.getElementById("code_hesabdari");
+    if (codeInput) {
+        codeInput.value = code;
+        
+        // افزودن کلاس برای نمایش انیمیشن
+        codeInput.classList.add('highlight');
+        
+        // حذف کلاس highlight بعد از 1 ثانیه
+        setTimeout(() => {
+            codeInput.classList.remove('highlight');
+        }, 1000);
+    } else {
+        console.error("فیلد کد حسابداری یافت نشد!");
+    }
 }
 
 function openCategoryModal() {

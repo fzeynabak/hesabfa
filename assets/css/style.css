@@ -608,3 +608,14 @@ body {
         height: 250px;
     }
 }
+
+/* اضافه کردن به فایل /hesabfa/assets/css/style.css */
+@keyframes highlightBackground {
+    0% { background-color: #ffffff; }
+    50% { background-color: #e5e7eb; }
+    100% { background-color: #ffffff; }
+}
+
+.highlight {
+    animation: highlightBackground 1s ease;
+}
