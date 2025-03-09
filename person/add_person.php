@@ -87,24 +87,14 @@ include '../index.php';
                         </label>
                     </div>
 
-                    <!-- بخش جدید: انتخاب دسته‌بندی‌ها -->
+                    <!-- جایگزینی بخش دسته‌بندی -->
                     <div class="mb-4">
                         <label class="block text-gray-700 text-sm font-bold mb-2">
                             دسته‌بندی‌ها:
                         </label>
-                        <div class="flex flex-wrap gap-2" id="personCategories">
-                            <!-- دسته‌بندی‌های انتخاب شده اینجا نمایش داده می‌شوند -->
-                        </div>
-                        <input type="hidden" id="categoryIds" name="category_ids" value="">
-                        <button type="button" 
-                                onclick="openCategoryModal()" 
-                                class="mt-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
-                            <i class="fas fa-tags ml-1"></i>
-                            انتخاب دسته‌بندی‌ها
-                        </button>
+                        <?php include 'categories/category_modal.php'; ?>
                     </div>
                 </div>
-                
             </div>
             <div class="w-1/4">
                 <!-- تصویر شخص -->
@@ -349,8 +339,10 @@ include '../index.php';
             </button>
         </div>
     </form>
-    <?php include '/categories/category_modal.php'; ?>
-    <script src="../assets/js/category-manager.js"></script>
+    <?php include 'categories/category_modal.php'; ?>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="../assets/js/main.js"></script>
+    <script src="../assets/js/category-dropdown.js"></script>
 </div>
 
 <script>

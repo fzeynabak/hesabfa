@@ -13,11 +13,23 @@
                 <i class="fas fa-plus ml-2"></i>
                 دسته‌بندی جدید
             </button>
-            <div class="flex-1">
-                <input type="text" 
-                       id="categorySearch" 
-                       placeholder="جستجو در دسته‌بندی‌ها..." 
-                       class="w-full p-2 border rounded">
+            <div id="categorySearch-wrapper" class="relative w-full">
+                <div class="flex flex-col">
+                    <div class="flex items-center p-2 border rounded">
+                        <input type="text" 
+                               id="categorySearch" 
+                               class="w-full outline-none" 
+                               placeholder="جستجو در دسته‌بندی‌ها...">
+                        <i class="fas fa-search text-gray-400"></i>
+                    </div>
+                    <div id="categoryDropdown" class="hidden absolute z-50 w-full mt-1 bg-white border rounded-lg shadow-lg max-h-60 overflow-y-auto top-full">
+                        <!-- لیست دسته‌بندی‌ها اینجا نمایش داده می‌شود -->
+                    </div>
+                </div>
+                <div id="selectedCategoriesContainer" class="flex flex-wrap gap-2 mt-2">
+                    <!-- دسته‌بندی‌های انتخاب شده اینجا نمایش داده می‌شوند -->
+                </div>
+                <input type="hidden" id="categoryIds" name="category_ids" value="">
             </div>
         </div>
 
