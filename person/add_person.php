@@ -210,7 +210,7 @@ include '../index.php';
                     </div>
                     <div class="mb-4">
                         <label class="block text-gray-700 text-sm font-bold mb-2" for="tozihat">
-                        توضیحات:
+                            توضیحات:
                         </label>
                         <textarea class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="tozihat" name="tozihat" placeholder="توضیحات"></textarea>
                     </div>
@@ -251,22 +251,7 @@ include '../index.php';
                     </div>
                 </div>
             </div>
-
-            <div id="contact" class="tab-content p-4 hidden">
-                <div class="grid grid-cols-1 gap-4">
-                    <div class="mb-4">
-                        <label class="block text-gray-700 text-sm font-bold mb-2" for="telephone">
-                            تلفن:
-                        </label>
-                        <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="telephone" name="telephone" type="text" placeholder="تلفن">
-                    </div>
-                    <div class="mb-4">
-                        <label class="block text-gray-700 text-sm font-bold mb-2" for="mobile">
-                            موبایل:
-                        </label>
-                        <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="mobile" name="mobile" type="text" placeholder="موبایل">
-                    </div>
-                    <div class="mb-4">
+            <div class="mb-4">
                         <label class="block text-gray-700 text-sm font-bold mb-2" for="fax">
                             فکس:
                         </label>
@@ -369,3 +354,4 @@ document.addEventListener("DOMContentLoaded", function() {
     document.getElementById("general").style.display = "block";
 });
 </script>
+
