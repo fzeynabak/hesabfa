@@ -3,12 +3,14 @@ $page = '/hesabfa/person/add_person.php';
 include '../index.php';
 ?>
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" integrity="sha512-wnea99uKIC3OJeOA1UDjUxWxYEjbz5Bi6qidw9/tKtCuj/j7W3tGYWVMvPQRwUjvL5j6ykjFLEd5P8gW4A1G2w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<!-- حذف CDN تیلویند و استفاده از نسخه محلی -->
+<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 <link rel="stylesheet" href="../assets/css/style.css">
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="../assets/js/main.js"></script>
+<script src="../assets/js/main.js" defer></script>
 
 <div class="flex-1 p-4">
     <h2 class="text-2xl font-bold mb-4">شخص جدید</h2>
@@ -23,19 +25,19 @@ include '../index.php';
                             کد حسابداری:
                         </label>
                         <!-- قسمت تولید کد حسابداری را به این صورت تغییر دهید -->
-<div class="flex">
-    <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ml-2" 
-           id="code_hesabdari" 
-           name="code_hesabdari" 
-           type="text" 
-           placeholder="کد حسابداری را وارد کنید">
-    <button type="button" 
-            onclick="generateCode()" 
-            class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
-            <i class="fas fa-sync-alt ml-1"></i>
-            تولید
-    </button>
-</div>
+                        <div class="flex">
+                            <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ml-2" 
+                                   id="code_hesabdari" 
+                                   name="code_hesabdari" 
+                                   type="text" 
+                                   placeholder="کد حسابداری را وارد کنید">
+                            <button type="button" 
+                                    onclick="generateCode()" 
+                                    class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                                    <i class="fas fa-sync-alt ml-1"></i>
+                                    تولید
+                            </button>
+                        </div>
                     </div>
                     <div class="mb-4">
                         <label class="block text-gray-700 text-sm font-bold mb-2" for="company">
@@ -84,6 +86,23 @@ include '../index.php';
                             <span class="ml-2 text-gray-700">کارمند</span>
                         </label>
                     </div>
+
+                    <!-- بخش جدید: انتخاب دسته‌بندی‌ها -->
+                    <div class="mb-4">
+                        <label class="block text-gray-700 text-sm font-bold mb-2">
+                            دسته‌بندی‌ها:
+                        </label>
+                        <div class="flex flex-wrap gap-2" id="personCategories">
+                            <!-- دسته‌بندی‌های انتخاب شده اینجا نمایش داده می‌شوند -->
+                        </div>
+                        <input type="hidden" id="categoryIds" name="category_ids" value="">
+                        <button type="button" 
+                                onclick="openCategoryModal()" 
+                                class="mt-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                            <i class="fas fa-tags ml-1"></i>
+                            انتخاب دسته‌بندی‌ها
+                        </button>
+                    </div>
                 </div>
             </div>
             <div class="w-1/4">
@@ -91,7 +110,7 @@ include '../index.php';
                 <div class="image-upload">
                     <label for="file-input">
                         <div class="image-preview">
-                            <img id="imagePreview" src="default_person.png" alt="تصویر شخص" />
+                            <img id="imagePreview" src="../uploads/default-image/default person.png" alt="تصویر شخص" />
                         </div>
                     </label>
                     <div class="image-edit">
@@ -328,6 +347,8 @@ include '../index.php';
             </button>
         </div>
     </form>
+    <?php include '/categories/category_modal.php'; ?>
+    
 </div>
 
 <script>
@@ -349,7 +370,12 @@ function generateCode() {
     // Logic to generate code
 }
 
+function openCategoryModal() {
+    // Logic to open category modal
+}
+
 document.addEventListener("DOMContentLoaded", function() {
     document.getElementById("general").style.display = "block";
 });
+
 </script>

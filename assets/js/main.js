@@ -1,3 +1,112 @@
+// بهینه‌سازی کد جاوااسکریپت
+document.addEventListener('DOMContentLoaded', function() {
+    initializeApp();
+    initializeEventListeners();
+});
+
+function initializeEventListeners() {
+    // اضافه کردن event listener برای جستجوی دسته‌بندی
+    const categorySearch = document.getElementById('categorySearch');
+    if (categorySearch) {
+        categorySearch.addEventListener('input', (e) => {
+            loadCategories(e.target.value);
+        });
+    }
+
+    // اضافه کردن event listener برای فرم دسته‌بندی
+    const categoryForm = document.getElementById('addEditCategoryForm');
+    if (categoryForm) {
+        categoryForm.addEventListener('submit', handleCategoryFormSubmit);
+    }
+
+    // مقداردهی اولیه دسته‌بندی‌های انتخاب شده
+    initializeSelectedCategories();
+}
+
+// تابع جدید برای تولید کد حسابداری
+function generateCode() {
+    try {
+        // تولید یک عدد 6 رقمی تصادفی با پیشوند سال
+        let prefix = new Date().getFullYear().toString().substr(-2);
+        let random = Math.floor(Math.random() * 9000) + 1000;
+        let code = prefix + random.toString();
+        
+        let codeInput = document.getElementById("code_hesabdari");
+        if (!codeInput) {
+            console.error("فیلد کد حسابداری پیدا نشد");
+            return;
+        }
+
+        // اعمال کد جدید با افکت بصری
+        codeInput.value = code;
+        codeInput.classList.add('highlight');
+        
+        setTimeout(() => {
+            codeInput.classList.remove('highlight');
+        }, 1000);
+
+        // لاگ برای اطمینان از تولید کد
+        console.log('کد جدید تولید شد:', code);
+
+    } catch (error) {
+        console.error('خطا در تولید کد:', error);
+    }
+}
+
+// بهینه‌سازی تابع مدیریت فرم دسته‌بندی
+function handleCategoryFormSubmit(e) {
+    e.preventDefault();
+
+    const formData = new FormData();
+    const categoryId = document.getElementById('categoryId');
+    const categoryCode = document.getElementById('categoryCode');
+    const categoryName = document.getElementById('categoryName');
+    const categoryDescription = document.getElementById('categoryDescription');
+
+    if (!categoryId || !categoryCode || !categoryName || !categoryDescription) {
+        console.error('یکی از فیلدهای ضروری پیدا نشد');
+        return;
+    }
+
+    formData.append('id', categoryId.value);
+    formData.append('code', categoryCode.value);
+    formData.append('name', categoryName.value);
+    formData.append('description', categoryDescription.value);
+
+    const url = categoryId.value ? 'update_category.php' : 'save_category.php';
+
+    fetch(url, {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            closeCategoryForm();
+            loadCategories();
+            alert(data.message);
+        } else {
+            alert(data.message || 'خطا در ذخیره‌سازی دسته‌بندی');
+        }
+    })
+    .catch(error => {
+        console.error('خطا:', error);
+        alert('خطا در ارتباط با سرور');
+    });
+}
+
+// تابع مقداردهی اولیه دسته‌بندی‌های انتخاب شده
+function initializeSelectedCategories() {
+    const categoryIdsElement = document.getElementById('categoryIds');
+    if (categoryIdsElement && categoryIdsElement.value) {
+        const ids = categoryIdsElement.value.split(',');
+        ids.forEach(id => selectedCategories.add(parseInt(id)));
+        updateSelectedCategoriesDisplay();
+    }
+}
+
+// ادامه توابع موجود بدون تغییر...
+
 // تنظیمات اولیه و متغیرهای جهانی
 document.addEventListener('DOMContentLoaded', function() {
     initializeApp();
@@ -68,28 +177,8 @@ function formatDate(date) {
 }
 
 // توابع دسته‌بندی‌ها
-// تابع جدید generateCode که قابلیت تولید کد یکتا را دارد
 function generateCode() {
-    // تولید یک عدد 6 رقمی تصادفی
-    let prefix = new Date().getFullYear().toString().substr(-2); // گرفتن 2 رقم آخر سال جاری
-    let random = Math.floor(Math.random() * 9000) + 1000; // تولید عدد 4 رقمی تصادفی
-    let code = prefix + random.toString(); // ترکیب سال و عدد تصادفی
-    
-    // قرار دادن کد در فیلد ورودی
-    let codeInput = document.getElementById("code_hesabdari");
-    if (codeInput) {
-        codeInput.value = code;
-        
-        // افزودن کلاس برای نمایش انیمیشن
-        codeInput.classList.add('highlight');
-        
-        // حذف کلاس highlight بعد از 1 ثانیه
-        setTimeout(() => {
-            codeInput.classList.remove('highlight');
-        }, 1000);
-    } else {
-        console.error("فیلد کد حسابداری یافت نشد!");
-    }
+    document.getElementById("code_hesabdari").value = Math.floor(Math.random() * 900000) + 100000;
 }
 
 function openCategoryModal() {

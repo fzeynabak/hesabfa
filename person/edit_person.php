@@ -223,7 +223,7 @@ closeConnection();
                         <div class="image-upload">
                             <label for="file-input">
                                 <div class="image-preview">
-                                    <img id="imagePreview" src="default_person.png" alt="تصویر فرد"/>
+                                    <img id="imagePreview" src="../uploads/default-image/default person.png" alt="تصویر فرد"/>
                                 </div>
                             </label>
                             <div class="image-edit">
