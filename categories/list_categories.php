@@ -15,21 +15,6 @@ $sql = "SELECT c1.*,
         FROM categories c1" . $where . "
         ORDER BY c1.name ASC";
 $result = executeQuery($sql);
-
-$categories = [];
-while ($row = $result->fetch_assoc()) {
-    $categories[] = [
-        'id' => $row['id'],
-        'name' => $row['name'],
-        'parent_name' => $row['parent_name'],
-        'description' => $row['description'],
-        'status' => $row['status']
-    ];
-}
-
-// بازگرداندن داده‌ها به فرمت JSON
-header('Content-Type: application/json');
-echo json_encode($categories);
 ?>
 
 <div class="flex-1 p-4">
@@ -69,14 +54,13 @@ echo json_encode($categories);
                 </tr>
             </thead>
             <tbody class="bg-white divide-y divide-gray-200">
-                
                 <?php if ($result && $result->num_rows > 0): ?>
                     <?php while ($row = $result->fetch_assoc()): ?>
                         <tr class="hover:bg-gray-50">
                             <td class="px-6 py-4 whitespace-nowrap">
                                 <a href="view_category.php?id=<?php echo $row['id']; ?>" 
-                                   class="text-indigo-600 hover:text-indigo-800 hover:underline font-medium">
-                                    <?php echo htmlspecialchars($row['code']); ?>
+                                   class="text-blue-600 hover:text-blue-900 hover:underline">
+                                    <?php echo htmlspecialchars($row['id']); ?>
                                 </a>
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap font-medium"><?php echo htmlspecialchars($row['name']); ?></td>
@@ -93,13 +77,17 @@ echo json_encode($categories);
                                     </span>
                                 <?php endif; ?>
                             </td>
-                            <td class="px-6 py-4 whitespace-nowrap text-left">
-                                <a href="edit_category.php?id=<?php echo $row['id']; ?>" class="text-blue-600 hover:text-blue-900 mx-1">
-                                    <i class="fas fa-edit"></i>
-                                </a>
-                                <button onclick="deleteCategory(<?php echo $row['id']; ?>)" class="text-red-600 hover:text-red-900 mx-1">
-                                    <i class="fas fa-trash"></i>
-                                </button>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <div class="flex items-center justify-end gap-3">
+                                    <a href="edit_category.php?id=<?php echo $row['id']; ?>" 
+                                       class="text-blue-600 hover:text-blue-900 transition-colors duration-200">
+                                        <i class="fas fa-edit"></i>
+                                    </a>
+                                    <button onclick="deleteCategory(<?php echo $row['id']; ?>)" 
+                                            class="text-red-600 hover:text-red-900 transition-colors duration-200">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </div>
                             </td>
                         </tr>
                     <?php endwhile; ?>
