@@ -1,47 +1,56 @@
 <?php
 header('Content-Type: application/json; charset=utf-8');
 
-// تنظیمات اتصال به دیتابیس
+// اتصال به دیتابیس
 require_once '../../config/database.php';
 
 try {
-    // دریافت پارامتر جستجو
     $search = isset($_GET['search']) ? $_GET['search'] : '';
     
-    // ایجاد اتصال به دیتابیس
-    $pdo = new PDO("mysql:host={$db_config['host']};dbname={$db_config['dbname']};charset=utf8mb4", 
-                   $db_config['username'], 
-                   $db_config['password']);
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    // اتصال به دیتابیس
+    $conn = new mysqli($db_config['host'], $db_config['username'], $db_config['password'], $db_config['dbname']);
+    
+    // تنظیم کاراکترست به UTF8
+    $conn->set_charset("utf8");
 
-    // ساخت کوئری
-    $query = "SELECT id, name, code FROM categories WHERE 1=1";
-    $params = [];
-
-    if (!empty($search)) {
-        $query .= " AND (name LIKE :search OR code LIKE :search)";
-        $params[':search'] = '%' . $search . '%';
+    if ($conn->connect_error) {
+        throw new Exception("خطا در اتصال به پایگاه داده: " . $conn->connect_error);
     }
 
+    // ساخت کوئری
+    $query = "SELECT id, name, code FROM person_categories WHERE 1=1";
+    if (!empty($search)) {
+        $search = $conn->real_escape_string($search);
+        $query .= " AND (name LIKE '%$search%' OR code LIKE '%$search%')";
+    }
     $query .= " ORDER BY name ASC";
 
-    // اجرای کوئری
-    $stmt = $pdo->prepare($query);
-    $stmt->execute($params);
-    $categories = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    $result = $conn->query($query);
+    
+    $categories = [];
+    if ($result) {
+        while ($row = $result->fetch_assoc()) {
+            $categories[] = [
+                'id' => (int)$row['id'],
+                'name' => $row['name'],
+                'code' => $row['code']
+            ];
+        }
+    }
 
-    // برگرداندن نتیجه
     echo json_encode([
         'status' => 'success',
         'data' => $categories
     ], JSON_UNESCAPED_UNICODE);
 
-} catch (PDOException $e) {
-    // در صورت بروز خطا
+} catch (Exception $e) {
     http_response_code(500);
     echo json_encode([
         'status' => 'error',
-        'message' => 'خطا در ارتباط با پایگاه داده',
-        'error' => $e->getMessage()
+        'message' => $e->getMessage()
     ], JSON_UNESCAPED_UNICODE);
+} finally {
+    if (isset($conn)) {
+        $conn->close();
+    }
 }

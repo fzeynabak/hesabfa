@@ -1,51 +1,46 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // تعریف متغیرهای سراسری
     const searchInput = document.getElementById('categorySearch');
     const dropdown = document.getElementById('categoryDropdown');
     const selectedContainer = document.getElementById('selectedCategoriesContainer');
     const categoryIdsInput = document.getElementById('categoryIds');
-    const mainCategoryIdInput = document.getElementById('mainCategoryId');
     
     let selectedCategories = new Set();
     let mainCategoryId = null;
     let categories = [];
     let searchTimeout;
 
-    // مدیریت جستجو با تاخیر
     if (searchInput) {
         searchInput.addEventListener('input', function(e) {
             clearTimeout(searchTimeout);
             const searchTerm = e.target.value.trim();
             
             searchTimeout = setTimeout(() => {
-                if (searchTerm.length > 0) {
-                    fetchCategories(searchTerm);
-                    showDropdown();
-                } else {
-                    fetchCategories(); // دریافت همه دسته‌بندی‌ها
-                    showDropdown();
-                }
+                fetchCategories(searchTerm);
             }, 300);
         });
 
-        // نمایش همه دسته‌بندی‌ها با کلیک روی فیلد جستجو
         searchInput.addEventListener('focus', function() {
             fetchCategories();
             showDropdown();
         });
     }
 
-    // بستن دراپ‌داون با کلیک خارج از آن
     document.addEventListener('click', function(e) {
         if (!searchInput?.contains(e.target) && !dropdown?.contains(e.target)) {
             hideDropdown();
         }
     });
 
-    // دریافت دسته‌بندی‌ها از سرور
     function fetchCategories(search = '') {
-        const apiUrl = '../categories/get_categories.php' + (search ? `?search=${encodeURIComponent(search)}` : '');
+        // تغییر مسیر API مطابق با ساختار پروژه
+        const apiUrl = '/hesabfa/person/categories/get_categories.php' + (search ? `?search=${encodeURIComponent(search)}` : '');
         
+        // نمایش پیام در حال بارگذاری
+        if (dropdown) {
+            dropdown.innerHTML = '<div class="p-2 text-gray-500">در حال بارگذاری...</div>';
+            showDropdown();
+        }
+
         fetch(apiUrl)
             .then(response => {
                 if (!response.ok) {
@@ -53,12 +48,11 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
                 return response.json();
             })
-            .then(data => {
-                if (Array.isArray(data)) {
-                    categories = data;
+            .then(response => {
+                if (response.status === 'success' && Array.isArray(response.data)) {
+                    categories = response.data;
                     renderDropdown();
                 } else {
-                    console.error('داده‌های دریافتی معتبر نیستند:', data);
                     throw new Error('داده‌های دریافتی معتبر نیستند');
                 }
             })
@@ -68,32 +62,25 @@ document.addEventListener('DOMContentLoaded', function() {
             });
     }
 
-    // نمایش پیام خطا
     function showError(message) {
-        const errorDiv = document.createElement('div');
-        errorDiv.className = 'text-red-500 text-sm mt-1';
-        errorDiv.textContent = message;
-        if (searchInput && searchInput.parentNode) {
-            searchInput.parentNode.appendChild(errorDiv);
-            setTimeout(() => errorDiv.remove(), 3000);
+        if (dropdown) {
+            dropdown.innerHTML = `<div class="p-2 text-red-500">${message}</div>`;
+            showDropdown();
         }
     }
 
-    // نمایش دراپ‌داون
     function showDropdown() {
         if (dropdown) {
             dropdown.classList.remove('hidden');
         }
     }
 
-    // مخفی کردن دراپ‌داون
     function hideDropdown() {
         if (dropdown) {
             dropdown.classList.add('hidden');
         }
     }
 
-    // نمایش دسته‌بندی‌ها در دراپ‌داون
     function renderDropdown() {
         if (!dropdown) return;
 
@@ -121,15 +108,13 @@ document.addEventListener('DOMContentLoaded', function() {
                 </button>
             `;
             
-            // مدیریت رویدادهای کلیک
             div.addEventListener('click', (e) => {
                 if (!e.target.matches('button, button *')) {
                     toggleCategory(category);
                 }
             });
 
-            const starButton = div.querySelector('button');
-            starButton.addEventListener('click', (e) => {
+            div.querySelector('button').addEventListener('click', (e) => {
                 e.stopPropagation();
                 toggleMainCategory(parseInt(category.id));
             });
@@ -138,7 +123,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // تغییر وضعیت انتخاب دسته‌بندی
     function toggleCategory(category) {
         const categoryId = parseInt(category.id);
         if (selectedCategories.has(categoryId)) {
@@ -153,7 +137,6 @@ document.addEventListener('DOMContentLoaded', function() {
         renderDropdown();
     }
 
-    // تغییر دسته‌بندی اصلی
     function toggleMainCategory(categoryId) {
         if (!selectedCategories.has(categoryId)) {
             selectedCategories.add(categoryId);
@@ -163,13 +146,11 @@ document.addEventListener('DOMContentLoaded', function() {
         renderDropdown();
     }
 
-    // بروزرسانی نمایش دسته‌بندی‌های انتخاب شده
     function updateSelectedCategories() {
-        if (!selectedContainer || !categoryIdsInput || !mainCategoryIdInput) return;
+        if (!selectedContainer || !categoryIdsInput) return;
 
         selectedContainer.innerHTML = '';
         categoryIdsInput.value = Array.from(selectedCategories).join(',');
-        mainCategoryIdInput.value = mainCategoryId || '';
 
         Array.from(selectedCategories).forEach(id => {
             const category = categories.find(c => parseInt(c.id) === id);
@@ -188,7 +169,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // حذف دسته‌بندی - تعریف به صورت عمومی برای دسترسی از HTML
     window.removeCategoryTag = function(categoryId) {
         categoryId = parseInt(categoryId);
         selectedCategories.delete(categoryId);
