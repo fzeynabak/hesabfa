@@ -54,6 +54,7 @@ $result = executeQuery($sql);
                 </tr>
             </thead>
             <tbody class="bg-white divide-y divide-gray-200">
+                
                 <?php if ($result && $result->num_rows > 0): ?>
                     <?php while ($row = $result->fetch_assoc()): ?>
                         <tr class="hover:bg-gray-50">

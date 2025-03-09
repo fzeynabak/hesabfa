@@ -11,14 +11,22 @@ include '../database.php';
     <div class="bg-white rounded-lg shadow p-6">
         <form id="categoryForm" method="post" enctype="multipart/form-data">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div class="mb-4">
-                    <label class="block text-gray-700 text-sm font-bold mb-2" for="code">
-                        کد دسته‌بندی
-                    </label>
-                    <input type="text" id="code" name="code" 
-                           class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" 
-                           placeholder="کد دسته‌بندی را وارد کنید">
-                </div>
+                <!-- جایگزین کردن بخش کد دسته‌بندی در add_category.php -->
+<div class="mb-4">
+    <label class="block text-gray-700 text-sm font-bold mb-2" for="code">
+        کد دسته‌بندی
+    </label>
+    <div class="flex">
+        <input type="text" id="code" name="code" 
+               class="shadow appearance-none border rounded-r w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" 
+               placeholder="کد دسته‌بندی را وارد کنید">
+        <button type="button" onclick="generateCategoryCode()"
+                class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-l">
+            <i class="fas fa-magic ml-1"></i>
+            تولید خودکار
+        </button>
+    </div>
+</div>
 
                 <div class="mb-4">
                     <label class="block text-gray-700 text-sm font-bold mb-2" for="name">
@@ -146,4 +154,16 @@ document.getElementById('categoryForm').addEventListener('submit', function(e) {
         alert('خطا در ارتباط با سرور');
     });
 });
+// اضافه کردن به بخش اسکریپت‌های موجود
+function generateCategoryCode() {
+    fetch('generate_category_code.php')
+        .then(response => response.json())
+        .then(data => {
+            document.getElementById('code').value = data.code;
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('خطا در تولید کد دسته‌بندی');
+        });
+}
 </script>
