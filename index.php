@@ -52,7 +52,7 @@ session_start();
                     <li class="mb-2">
                         <a href="#"><i class="fas fa-box-open ml-2"></i> کالاها و خدمات</a>
                         <ul class="submenu">
-                            <li><a href="/hesabfa/products_services/add_product.php"><i class="fas fa-plus ml-2"></i> محصول جدید</a></li>
+                            <li><a href="/hesabfa/product/add_product.php"><i class="fas fa-plus ml-2"></i> محصول جدید</a></li>
                             <li><a href="/hesabfa/products_services/products_list.php"><i class="fas fa-list ml-2"></i> فهرست محصولات</a></li>
                             <li><a href="/hesabfa/products_services/add_service.php"><i class="fas fa-plus ml-2"></i> خدمات جدید</a></li>
                             <li><a href="/hesabfa/products_services/services_list.php"><i class="fas fa-list ml-2"></i> فهرست خدمات</a></li>

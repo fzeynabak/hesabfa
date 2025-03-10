@@ -1,0 +1,130 @@
+Folder PATH listing
+Volume serial number is C0000100 1A06:CD02
+C:.
+³   .gitignore
+³   a.sh
+³   config.php
+³   create_tables.sql
+³   database.php
+³   hesabfa.sql
+³   hesabfa.zip
+³   index.php
+³   output.txt
+³   package-lock.json
+³   package.json
+³   README.md
+³   shaks.txt
+³   
+ÃÄÄÄanbardari
+³       anbargardani.php
+³       anbarha.php
+³       havale_jadid.php
+³       mojoodi_kala.php
+³       mojoodi_tamami_anbarha.php
+³       resid_havalehaye_anbar.php
+³       
+ÃÄÄÄassets
+³   ÃÄÄÄcss
+³   ³       ategories.css
+³   ³       style.css
+³   ³       
+³   ÀÄÄÄjs
+³           categories.js
+³           category-dropdown.js
+³           category-manager.js
+³           jquery-3.6.0.min.js
+³           main.js
+³           
+ÃÄÄÄcategories
+³       add_category.php
+³       category_modal.php
+³       delete_category.php
+³       edit_category.php
+³       generate_category_code.php
+³       list_categories.php
+³       save_category.php
+³       styles.css
+³       update_category.php
+³       upload_image.php
+³       view_category.php
+³       
+ÃÄÄÄconfig
+³       database.php
+³       
+ÃÄÄÄdashboard
+³       index.php
+³       
+ÃÄÄÄdatabase
+³       create_categories_table.sql
+³       create_persons_table.sql
+³       database.sql
+³       update_categories_table.sql
+³       
+ÃÄÄÄforosh_daramad
+³       aghlam_takhfif_dar.php
+³       bargesht_az_forosh.php
+³       daramad.php
+³       factorehaye_bargasht_az_forosh.php
+³       factorehaye_forosh.php
+³       factore_s???.php
+³       forosh_jadid.php
+³       gharadad_forosh_aghsati.php
+³       liste_daramadha.php
+³       liste_forosh_aghsati.php
+³       
+ÃÄÄÄgozareshha
+³       index.php
+³       
+ÃÄÄÄincludes
+³       Database.php
+³       header.php
+³       sidebar.php
+³       
+ÃÄÄÄkala_khadamat
+³       fehrest_khadamat.php
+³       fehrest_mahsolat.php
+³       khadamat_jadid.php
+³       mahsol_jadid.php
+³       update_ghimat.php
+³       
+ÃÄÄÄkharid_hazine
+³       bargesht_az_kharid.php
+³       factorehaye_bargasht_az_kharid.php
+³       factorehaye_kharid.php
+³       hazine.php
+³       kharid_jadid.php
+³       liste_hazineha.php
+³       
+ÃÄÄÄperson
+³   ³   add_person.txt
+³   ³   delete_category.php
+³   ³   delete_person.php
+³   ³   edit_person.php
+³   ³   generate_category_code.php
+³   ³   get_categories.php
+³   ³   get_category.php
+³   ³   person.php
+³   ³   person_categories.php
+³   ³   save_category.php
+³   ³   save_person.php
+³   ³   update_category.php
+³   ³   update_person.php
+³   ³   view_person.php
+³   ³   
+³   ÀÄÄÄcategories
+³           category_modal.php
+³           get_categories.php
+³           
+ÃÄÄÄtanzimat
+³       index.php
+³       
+ÀÄÄÄuploads
+    ÃÄÄÄcategories
+    ³       67cd75ffe3f5b.png
+    ³       67cdd942eb102.png
+    ³       67cdd948eabe0.png
+    ³       67cdfcdf1cb17.png
+    ³       
+    ÀÄÄÄdefault-image
+            default person.png
+            
